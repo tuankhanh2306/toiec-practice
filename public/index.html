@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đêm Học Bài - Vocab & Terminology App</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <header>
+    <div class="nav-container">
+      <a href="#dashboard" class="logo">
+        <svg style="width: 24px; height: 24px; fill: currentColor;" viewBox="0 0 24 24">
+          <path
+            d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 19.4c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l1.9-1.9C9.22 19.58 10.57 20 12 20c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 15c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm-1-8h2v2h-2v-2zm0 4h2v2h-2v-2z" />
+        </svg>
+        Đêm Học Bài
+      </a>
+      <nav class="nav-links">
+        <a href="#dashboard" class="nav-btn" id="nav-dashboard">Bàn Học</a>
+        <a href="#import" class="nav-btn" id="nav-import">Thêm Từ Vựng</a>
+        <a href="#settings" class="nav-btn" id="nav-settings">Cài Đặt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard" class="view">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Tổng từ vựng</div>
+          <div class="stat-value" id="stat-total-words">0</div>
+          <div class="stat-desc" id="stat-active-topics">0 chủ đề</div>
+        </div>
+        <div class="stat-card streak">
+          <div class="stat-label">Chuỗi học tập</div>
+          <div class="stat-value" id="stat-streak">0 ngày</div>
+          <div class="stat-desc">Học mỗi ngày để giữ lửa 🔥</div>
+        </div>
+        <div class="stat-card mastered">
+          <div class="stat-label">Đã thuộc lòng</div>
+          <div class="stat-value" id="stat-mastered">0</div>
+          <div class="stat-desc">Đạt cấp độ tối đa (Lvl 4)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Cần ôn tập</div>
+          <div class="stat-value" id="stat-due" style="color: var(--accent-gold);">0</div>
+          <div class="stat-desc">Từ mới & đến hạn ôn</div>
+        </div>
+      </div>
+
+      <!-- SRS Level Distribution Graph -->
+      <div class="stat-card srs-card" style="margin-bottom: 2.5rem; border-left: 4px solid var(--accent-teal);">
+        <div class="stat-label">Phân phối tiến trình SRS</div>
+        <div class="srs-distribution">
+          <div class="srs-bar-container">
+            <div class="srs-bar">
+              <div class="srs-bar-fill" id="srs-bar-0" style="background-color: var(--srs-0); height: 0%;"></div>
+            </div>
+            <div class="srs-bar-lbl">Lvl 0 (Mới)</div>
+          </div>
+          <div class="srs-bar-container">
+            <div class="srs-bar">
+              <div class="srs-bar-fill" id="srs-bar-1" style="background-color: var(--srs-1); height: 0%;"></div>
+            </div>
+            <div class="srs-bar-lbl">Lvl 1</div>
+          </div>
+          <div class="srs-bar-container">
+            <div class="srs-bar">
+              <div class="srs-bar-fill" id="srs-bar-2" style="background-color: var(--srs-2); height: 0%;"></div>
+            </div>
+            <div class="srs-bar-lbl">Lvl 2</div>
+          </div>
+          <div class="srs-bar-container">
+            <div class="srs-bar">
+              <div class="srs-bar-fill" id="srs-bar-3" style="background-color: var(--srs-3); height: 0%;"></div>
+            </div>
+            <div class="srs-bar-lbl">Lvl 3</div>
+          </div>
+          <div class="srs-bar-container">
+            <div class="srs-bar">
+              <div class="srs-bar-fill" id="srs-bar-4" style="background-color: var(--srs-4); height: 0%;"></div>
+            </div>
+            <div class="srs-bar-lbl">Lvl 4 (Thuộc)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTER TABS FOR VOCABULARY CLASSIFICATION -->
+      <div class="filter-tabs-container">
+        <div class="filter-tabs">
+          <button class="filter-tab active" data-tab="topics">Theo Chủ Đề</button>
+          <button class="filter-tab" data-tab="specialties">Theo Chuyên Ngành</button>
+          <button class="filter-tab" data-tab="contexts">Theo Hoàn Cảnh</button>
+        </div>
+        <a href="#import" class="btn btn-primary btn-import-shortcut">
+          <svg style="width: 18px; height: 18px; fill: currentColor; margin-right: 4px;" viewBox="0 0 24 24">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
+          </svg> Tải Lên Tài Liệu
+        </a>
+      </div>
+
+      <!-- MAIN CONTENT LISTS -->
+      <div id="tab-content-topics" class="tab-pane active">
+        <div class="topics-grid" id="topics-list">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <div id="tab-content-specialties" class="tab-pane">
+        <div class="topics-grid" id="specialties-list">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <div id="tab-content-contexts" class="tab-pane">
+        <div class="topics-grid" id="contexts-list">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <div class="danger-zone">
+        <p class="danger-zone-title">Danger Zone</p>
+        <button class="btn btn-danger" id="btn-reset-data">Xóa Toàn Bộ Dữ Liệu</button>
+      </div>
+    </section>
+
+    <!-- IMPORT VIEW -->
+    <section id="import" class="view">
+      <div class="import-container">
+        <h3>Nhập Tài Liệu & Phân Tích AI</h3>
+
+        <div class="help-box">
+          <strong>Hỗ trợ phân tích & phân loại chuyên sâu:</strong>
+          <ul>
+            <li>Tải lên file: <strong>Word (.docx)</strong>, <strong>PDF (.pdf)</strong>, <strong>Text (.txt)</strong>, <strong>CSV (.csv)</strong>, hoặc <strong>JSON (.json)</strong>.</li>
+            <li>Nếu có **Gemini API Key**, AI sẽ tự động phân tích toàn bộ văn bản tài liệu, trích xuất các từ vựng chính, và tự động sắp xếp theo chuyên ngành và hoàn cảnh sử dụng thực tế.</li>
+            <li>Nếu chưa có API Key, hệ thống sẽ phân tích ngoại tuyến từ thô (yêu cầu định dạng <code>từ - nghĩa - ví dụ</code>).</li>
+          </ul>
+        </div>
+
+        <div class="dropzone" id="dropzone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <p>Kéo thả tài liệu của bạn vào đây hoặc <strong>Click để chọn file</strong></p>
+          <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 5px;">Hỗ trợ: PDF, DOCX, TXT, CSV, JSON</p>
+          <input type="file" id="file-input" style="display: none;" accept=".txt,.csv,.json,.pdf,.docx">
+        </div>
+
+        <!-- Progress Spinner for uploading -->
+        <div id="upload-loading" class="loading-overlay" style="display: none;">
+          <div class="spinner"></div>
+          <p style="margin-top: 15px; font-weight: bold; color: var(--accent-gold);">AI đang đọc tài liệu và phân loại từ vựng...</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Quá trình này có thể mất từ 5-15 giây tùy thuộc vào độ dài văn bản.</p>
+        </div>
+
+        <div class="or-divider">hoặc tự nhập trực tiếp</div>
+
+        <div class="manual-input-area">
+          <div class="form-group">
+            <label for="import-topic-name">Tên chủ đề / Tên bài học</label>
+            <input type="text" id="import-topic-name" class="input-text"
+              placeholder="Ví dụ: Từ vựng TOEIC - Buổi 1">
+          </div>
+          <div class="form-group">
+            <label for="import-content">Danh sách từ vựng thô</label>
+            <textarea id="import-content" class="input-text"
+              placeholder="Ví dụ:&#10;contract - hợp đồng - We signed a new contract.&#10;abide by - tuân theo - You must abide by the rules."></textarea>
+          </div>
+          <button class="btn btn-primary" id="btn-submit-import" style="width: 100%;">Nhập Từ Vựng</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS VIEW -->
+    <section id="settings" class="view">
+      <div class="import-container">
+        <h3>Cấu Hình Ứng Dụng</h3>
+        
+        <div class="form-group" style="margin-top: 1.5rem;">
+          <label for="settings-gemini-key">Gemini API Key</label>
+          <div style="position: relative;">
+            <input type="password" id="settings-gemini-key" class="input-text" placeholder="Nhập API Key từ Google AI Studio">
+            <button class="btn-toggle-password" id="btn-toggle-key-visibility" type="button">Hiện</button>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px;">
+            Lưu ý: API Key được lưu trực tiếp vào cơ sở dữ liệu SQLite của ứng dụng ở phía máy chủ. Key này dùng để gọi Gemini API trích xuất và phân loại từ vựng khi upload file tài liệu.
+          </p>
+        </div>
+
+        <button class="btn btn-primary" id="btn-save-settings" style="width: 100%; margin-top: 1.5rem;">Lưu Cài Đặt</button>
+      </div>
+    </section>
+
+    <!-- FLASHCARD VIEW -->
+    <section id="flashcard" class="view">
+      <div class="flashcard-wrapper">
+        <div class="session-info">
+          <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;"
+            onclick="location.hash='#dashboard'">Dừng học</button>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="flashcard-progress-bar"></div>
+          </div>
+          <span id="flashcard-counter" style="font-family: var(--font-mono);">0/0</span>
+        </div>
+
+        <div class="card-perspective" id="card-perspective">
+          <div class="flashcard">
+            <!-- Front -->
+            <div class="card-face">
+              <div class="dog-ear" id="card-front-dogear"></div>
+              <div class="card-term-container">
+                <div class="card-term" id="card-front-term">term</div>
+                <div id="card-front-badge-container"></div>
+              </div>
+              <div class="card-footer-tip">Bấm vào thẻ hoặc nhấn Phím Cách để lật mặt sau</div>
+            </div>
+            <!-- Back -->
+            <div class="card-face card-back">
+              <div class="dog-ear" id="card-back-dogear"></div>
+              <div class="card-term-container">
+                <div class="card-meaning" id="card-back-meaning">meaning</div>
+                <div class="card-extra-details">
+                  <p><strong>Chuyên ngành:</strong> <span id="card-back-specialty">Luật</span></p>
+                  <p><strong>Hoàn cảnh:</strong> <span id="card-back-context">Hợp đồng</span></p>
+                </div>
+                <div class="card-example" id="card-back-example">example</div>
+              </div>
+              <div class="card-footer-tip">Chấm điểm ghi nhớ của bạn ở nút phía dưới</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flashcard-actions" id="flashcard-actions-hint"
+          style="text-align: center; color: var(--text-muted);">
+          <button class="btn btn-primary" id="btn-reveal-card" style="width: 100%;">Xem mặt sau (Phím cách)</button>
+        </div>
+
+        <div class="flashcard-actions" id="flashcard-actions-grade" style="display: none;">
+          <button class="btn btn-danger" id="btn-grade-wrong">Chưa Nhớ (Phím 1)</button>
+          <button class="btn btn-success" id="btn-grade-correct">Đã Nhớ (Phím 2)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ VIEW -->
+    <section id="quiz" class="view">
+      <div class="quiz-container">
+        <div class="session-info">
+          <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;"
+            onclick="location.hash='#dashboard'">Dừng học</button>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="quiz-progress-bar"></div>
+          </div>
+          <span id="quiz-counter" style="font-family: var(--font-mono);">0/0</span>
+        </div>
+
+        <div class="quiz-question-box">
+          <div id="quiz-badge-container" style="position: absolute; top: 1rem; left: 1rem;"></div>
+          <div class="quiz-question-word" id="quiz-question-word">term</div>
+          <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">Hãy chọn định nghĩa chính xác nhất của từ này:</p>
+        </div>
+
+        <div class="quiz-options-grid" id="quiz-options">
+          <!-- Dynamic options -->
+        </div>
+
+        <button class="btn btn-primary" id="btn-quiz-next" style="display: none; width: 100%; margin-top: 1rem;">Câu tiếp theo</button>
+      </div>
+    </section>
+
+    <!-- MATCHING GAME VIEW -->
+    <section id="game" class="view">
+      <div class="game-container">
+        <div class="game-header">
+          <button class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;"
+            onclick="location.hash='#dashboard'">Dừng game</button>
+          <div class="game-score">Ghép đúng: <span id="game-score-val"
+              style="font-family: var(--font-mono); font-weight: bold;">0</span></div>
+          <div class="game-timer">
+            <svg style="width: 20px; height: 20px; fill: currentColor;" viewBox="0 0 24 24">
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-6h2v6zm0-8h-2V6h2v2z" />
+            </svg>
+            <span id="game-timer-val">60s</span>
+          </div>
+        </div>
+
+        <div class="matching-grid" id="game-grid">
+          <!-- Rendered matching grid of cards -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SESSION SUMMARY / RESULTS VIEW -->
+    <section id="results" class="view">
+      <div class="results-container">
+        <h3 id="results-headline">Hoàn thành phiên học!</h3>
+        <p style="color: var(--text-muted);" id="results-subheadline">Hãy xem tiến trình học hôm nay của bạn</p>
+
+        <div class="results-score-wheel">
+          <span class="results-score-num" id="results-correct-ratio">100%</span>
+          <span class="results-score-lbl">Chính xác</span>
+        </div>
+
+        <div class="results-stats-list">
+          <div class="results-stat-row">
+            <span>Tổng số từ đã ôn</span>
+            <span class="results-stat-val" id="results-total-reviewed">0</span>
+          </div>
+          <div class="results-stat-row">
+            <span>Đúng / Nhớ</span>
+            <span class="results-stat-val" id="results-correct-count" style="color: var(--accent-teal);">0</span>
+          </div>
+          <div class="results-stat-row">
+            <span>Sai / Chưa nhớ</span>
+            <span class="results-stat-val" id="results-incorrect-count" style="color: var(--accent-coral);">0</span>
+          </div>
+          <div class="results-stat-row">
+            <span>Chuỗi học hiện tại</span>
+            <span class="results-stat-val" id="results-streak-val" style="color: var(--accent-gold);">0 ngày 🔥</span>
+          </div>
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%;" onclick="location.hash='#dashboard'">Quay lại Bàn Học</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast">
+    <span id="toast-text">Thông báo ở đây</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vocab Study App - Bản nâng cấp Full-stack</title>
+  <style>
+    body {
+      background-color: #14181F;
+      color: #E2E8F0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 600px;
+      background-color: #1E2430;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      color: #E8B84B;
+      margin-bottom: 1.5rem;
+    }
+
+    p {
+      color: #94A3B8;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .steps {
+      text-align: left;
+      background-color: #12161E;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 2rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+    }
+
+    .step-title {
+      font-weight: bold;
+      color: #4FBDBA;
+      margin-top: 10px;
+    }
+
+    .step-title:first-child {
+      margin-top: 0;
+    }
+
+    .code {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin: 5px 0;
+      color: #E8623D;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: #E8B84B;
+      color: #12161A;
+      font-weight: bold;
+      padding: 12px 30px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 12px rgba(232, 184, 75, 0.25);
+    }
+
+    .btn:hover {
+      background-color: #f7ca5d;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Vocab App đã được nâng cấp!</h1>
+    <p>
+      Ứng dụng học từ vựng đã được nâng cấp lên phiên bản <strong>Full-stack Web App</strong> có thể deploy, tích hợp cơ sở dữ liệu SQLite để lưu trữ và sử dụng AI (Gemini) để phân loại từ vựng tự động theo chuyên ngành và hoàn cảnh sử dụng.
+    </p>
+
+    <div class="steps">
+      <div class="step-title">Bước 1: Cài đặt thư viện dependencies</div>
+      <div class="code">npm install</div>
+
+      <div class="step-title">Bước 2: Khởi chạy Server ứng dụng</div>
+      <div class="code">npm start</div>
+
+      <div class="step-title">Bước 3: Truy cập Web App bằng Trình duyệt</div>
+      Truy cập đường dẫn: <a href="http://localhost:3000" style="color: #E8B84B;">http://localhost:3000</a>
+    </div>
+
+    <a href="http://localhost:3000" target="_blank" class="btn">Mở Ứng Dụng (Localhost:3000)</a>
+  </div>
+</body>
+
+</html>
