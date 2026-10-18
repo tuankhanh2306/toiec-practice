@@ -1,0 +1,1300 @@
+{
+  "topicName": "Từ vựng TOEIC 600 - Tổng hợp theo chuyên ngành và ngữ cảnh",
+  "words": [
+    {
+      "term": "agreement",
+      "meaning": "[n] /əˈɡriːmənt/ - một thỏa thuận chung, một hợp đồng",
+      "context": "Thỏa thuận hợp đồng",
+      "specialty": "Law",
+      "example": "We reached a mutual agreement today. (Chúng tôi đã đạt được một thỏa thuận chung hôm nay.)"
+    },
+    {
+      "term": "party",
+      "meaning": "[n] /ˈpɑːrti/ - một người hoặc một nhóm tham gia vào một hợp đồng",
+      "context": "Chủ thể hợp đồng",
+      "specialty": "Law",
+      "example": "Both parties must sign the contract. (Cả hai bên phải ký vào hợp đồng.)"
+    },
+    {
+      "term": "provision",
+      "meaning": "[n] /prəˈvɪʒn/ - một điều kiện cụ thể trong hợp đồng",
+      "context": "Điều khoản hợp đồng",
+      "specialty": "Law",
+      "example": "Please read the provisions carefully. (Vui lòng đọc kỹ các điều khoản.)"
+    },
+    {
+      "term": "clause",
+      "meaning": "[n] /klɔːz/ - một phần trong hợp đồng",
+      "context": "Mục lục pháp lý",
+      "specialty": "Law",
+      "example": "There is a cancellation clause in the agreement. (Có một điều khoản hủy bỏ trong thỏa thuận.)"
+    },
+    {
+      "term": "agree",
+      "meaning": "[v] /əˈɡriː/ - có cùng quan điểm hoặc sự hiểu biết",
+      "context": "Thương thảo hợp đồng",
+      "specialty": "Law",
+      "example": "We agree on the main terms. (Chúng tôi đồng ý về các điều khoản chính.)"
+    },
+    {
+      "term": "obligate",
+      "meaning": "[v] /ˈaːblɪɡeɪt/ - ràng buộc về mặt pháp lý hoặc đạo đức",
+      "context": "Nghĩa vụ pháp lý",
+      "specialty": "Law",
+      "example": "The contract obligates them to finish the project on time. (Hợp đồng buộc họ phải hoàn thành dự án đúng hạn.)"
+    },
+    {
+      "term": "sign",
+      "meaning": "[v] /saɪn/ - viết tên của bạn vào một tài liệu để thể hiện sự chấp thuận",
+      "context": "Ký kết văn bản",
+      "specialty": "Law",
+      "example": "Please sign your name on the dotted line. (Vui lòng ký tên của bạn vào đường kẻ chấm.)"
+    },
+    {
+      "term": "resolve",
+      "meaning": "[v] /rɪˈzɑːlv/ - để tìm một giải pháp",
+      "context": "Giải quyết tranh chấp",
+      "specialty": "Law",
+      "example": "We need to resolve this issue quickly. (Chúng tôi cần giải quyết vấn đề này nhanh chóng.)"
+    },
+    {
+      "term": "binding",
+      "meaning": "[adj] /ˈbaɪndɪŋ/ - yêu cầu về mặt pháp lý",
+      "context": "Hiệu lực pháp lý",
+      "specialty": "Law",
+      "example": "This document is a legally binding contract. (Tài liệu này là một hợp đồng ràng buộc về mặt pháp lý.)"
+    },
+    {
+      "term": "contractual",
+      "meaning": "[adj] /kənˈtræktʃuəl/ - liên quan đến hợp đồng",
+      "context": "Quan hệ hợp tác",
+      "specialty": "Law",
+      "example": "They have a contractual obligation. (Họ có một nghĩa vụ theo hợp đồng.)"
+    },
+    {
+      "term": "legal",
+      "meaning": "[adj] /ˈliːɡl/ - được pháp luật cho phép",
+      "context": "Tư vấn luật",
+      "specialty": "Law",
+      "example": "Is this action legal? (Hành động này có hợp pháp không?)"
+    },
+    {
+      "term": "legally",
+      "meaning": "[adv] /ˈliːɡəli/ - theo cách được pháp luật cho phép",
+      "context": "Ràng buộc tư pháp",
+      "specialty": "Law",
+      "example": "You are legally responsible. (Bạn phải chịu trách nhiệm trước pháp luật.)"
+    },
+    {
+      "term": "market",
+      "meaning": "[n] /ˈmɑːrkɪt/ - nhu cầu về một sản phẩm",
+      "context": "Nghiên cứu thị trường",
+      "specialty": "Marketing",
+      "example": "There is a growing market for organic food. (Có một thị trường ngày càng phát triển cho thực phẩm hữu cơ.)"
+    },
+    {
+      "term": "competition",
+      "meaning": "[n] /ˌkɑːmpəˈtɪʃn/ - hoạt động cạnh tranh",
+      "context": "Phân tích đối thủ",
+      "specialty": "Marketing",
+      "example": "We face stiff competition. (Chúng tôi đối mặt với sự cạnh tranh khốc liệt.)"
+    },
+    {
+      "term": "strategy",
+      "meaning": "[n] /ˈstrætədʒi/ - một kế hoạch hành động",
+      "context": "Kế hoạch chiến dịch",
+      "specialty": "Marketing",
+      "example": "We need a new marketing strategy. (Chúng tôi cần một chiến lược tiếp thị mới.)"
+    },
+    {
+      "term": "customer",
+      "meaning": "[n] /ˈkʌstəmər/ - ai đó mua hàng hóa hoặc dịch vụ",
+      "context": "Chăm sóc khách hàng",
+      "specialty": "Marketing",
+      "example": "The customer is always right. (Khách hàng luôn luôn đúng.)"
+    },
+    {
+      "term": "advertise",
+      "meaning": "[v] /ˈædvərtaɪz/ - để quảng bá một sản phẩm hoặc dịch vụ",
+      "context": "Quảng cáo truyền thông",
+      "specialty": "Marketing",
+      "example": "They advertise their products on television. (Họ quảng cáo sản phẩm của họ trên truyền hình.)"
+    },
+    {
+      "term": "attract",
+      "meaning": "[v] /əˈtrækt/ - để rút ra bằng cách kháng cáo",
+      "context": "Thu hút khách hàng",
+      "specialty": "Marketing",
+      "example": "We want to attract new clients. (Chúng tôi muốn thu hút những khách hàng mới.)"
+    },
+    {
+      "term": "consume",
+      "meaning": "[v] /kənˈsuːm/ - sử dụng hoặc mua một sản phẩm",
+      "context": "Hành vi người tiêu dùng",
+      "specialty": "Marketing",
+      "example": "This car consumes a lot of fuel. (Chiếc xe này tiêu thụ rất nhiều nhiên liệu.)"
+    },
+    {
+      "term": "market",
+      "meaning": "[v] /ˈmɑːrkɪt/ - để quảng bá và bán",
+      "context": "Tiếp thị sản phẩm",
+      "specialty": "Marketing",
+      "example": "They market their products worldwide. (Họ tiếp thị sản phẩm của họ trên toàn thế giới.)"
+    },
+    {
+      "term": "effective",
+      "meaning": "[adj] /ɪˈfɛktɪv/ - thành công trong việc tạo ra một kết quả mong muốn",
+      "context": "Hiệu suất chiến dịch",
+      "specialty": "Marketing",
+      "example": "This is an effective treatment. (Đây là một phương pháp điều trị hiệu quả.)"
+    },
+    {
+      "term": "productive",
+      "meaning": "[adj] /prəˈdʌktɪv/ - có thể sản xuất số lượng lớn",
+      "context": "Hiệu quả sản xuất",
+      "specialty": "Marketing",
+      "example": "We had a productive meeting. (Chúng tôi đã có một cuộc họp hiệu quả.)"
+    },
+    {
+      "term": "persuasive",
+      "meaning": "[adj] /pərˈsweɪsɪv/ - giỏi thuyết phục người khác",
+      "context": "Thuyết phục khách hàng",
+      "specialty": "Marketing",
+      "example": "Her argument was very persuasive. (Lập luận của cô ấy rất thuyết phục.)"
+    },
+    {
+      "term": "efficiently",
+      "meaning": "[adv] /ɪˈfɪʃəntli/ - theo cách đạt được năng suất tối đa",
+      "context": "Tối ưu hóa ngân sách",
+      "specialty": "Marketing",
+      "example": "We need to run the business efficiently. (Chúng tôi cần điều hành doanh nghiệp một cách hiệu quả.)"
+    },
+    {
+      "term": "warranty",
+      "meaning": "[n] /ˈwɔːrənti/ - một sự đảm bảo",
+      "context": "Dịch vụ hậu mãi",
+      "specialty": "Customer Service",
+      "example": "The television comes with a one-year warranty. (Chiếc tivi đi kèm với gói bảo hành một năm.)"
+    },
+    {
+      "term": "defect",
+      "meaning": "[n] /ˈdiːfɛkt/ - một lỗi hoặc sự không hoàn hảo",
+      "context": "Kiểm định chất lượng",
+      "specialty": "Customer Service",
+      "example": "There is a minor defect in the screen. (Có một lỗi nhỏ trên màn hình.)"
+    },
+    {
+      "term": "claim",
+      "meaning": "[n] /kleɪm/ - một nhu cầu cho một cái gì đó do",
+      "context": "Yêu cầu bồi thường",
+      "specialty": "Customer Service",
+      "example": "She made a claim under the warranty. (Cô ấy đã đưa ra yêu cầu bồi thường theo chính sách bảo hành.)"
+    },
+    {
+      "term": "coverage",
+      "meaning": "[n] /ˈkʌvərɪdʒ/ - mức độ mà một cái gì đó được bảo hiểm",
+      "context": "Hạn mức bảo hành",
+      "specialty": "Customer Service",
+      "example": "What is the warranty coverage? (Hạn mức bảo hành bao gồm những gì?)"
+    },
+    {
+      "term": "guarantee",
+      "meaning": "[v] /ˌɡærənˈtiː/ - cam kết về chất lượng sản phẩm",
+      "context": "Cam kết dịch vụ",
+      "specialty": "Customer Service",
+      "example": "We guarantee your satisfaction. (Chúng tôi cam kết sự hài lòng của bạn.)"
+    },
+    {
+      "term": "replace",
+      "meaning": "[v] /rɪˈpleɪs/ - thay thế",
+      "context": "Đổi trả sản phẩm lỗi",
+      "specialty": "Customer Service",
+      "example": "We will replace the broken parts. (Chúng tôi sẽ thay thế các bộ phận bị hỏng.)"
+    },
+    {
+      "term": "refund",
+      "meaning": "[v] /ˈriːfʌnd/ - trả lại tiền",
+      "context": "Hoàn tiền cho khách",
+      "specialty": "Customer Service",
+      "example": "We will refund your purchase. (Chúng tôi sẽ hoàn tiền mua hàng cho bạn.)"
+    },
+    {
+      "term": "repair",
+      "meaning": "[v] /rɪˈpɛr/ - để sửa chữa hoặc khôi phục",
+      "context": "Bảo trì thiết bị",
+      "specialty": "Customer Service",
+      "example": "It will take two days to repair the machine. (Sẽ mất hai ngày để sửa chữa máy móc.)"
+    },
+    {
+      "term": "defective",
+      "meaning": "[adj] /dɪˈfɛktɪv/ - có lỗi",
+      "context": "Phát hiện hàng hỏng",
+      "specialty": "Customer Service",
+      "example": "Return the defective unit for replacement. (Trả lại máy bị lỗi để đổi máy khác.)"
+    },
+    {
+      "term": "valid",
+      "meaning": "[adj] /ˈvælɪd/ - được chấp nhận về mặt pháp lý",
+      "context": "Thời hạn hiệu lực",
+      "specialty": "Customer Service",
+      "example": "The contract is no longer valid. (Hợp đồng không còn hiệu lực nữa.)"
+    },
+    {
+      "term": "expired",
+      "meaning": "[adj] /ɪkˈspaɪərd/ - không còn hiệu lực",
+      "context": "Hết hạn bảo hành",
+      "specialty": "Customer Service",
+      "example": "The warranty has expired. (Gói bảo hành đã hết hạn.)"
+    },
+    {
+      "term": "promptly",
+      "meaning": "[adv] /ˈprɑːmptli/ - không chậm trễ",
+      "context": "Xử lý nhanh chóng",
+      "specialty": "Customer Service",
+      "example": "They resolved the issue promptly. (Họ đã giải quyết vấn đề một cách nhanh chóng.)"
+    },
+    {
+      "term": "goal",
+      "meaning": "[n] /ɡoʊl/ - một mục tiêu hoặc kết quả mong muốn",
+      "context": "Mục tiêu kinh doanh",
+      "specialty": "Management",
+      "example": "What is our main goal this year? (Mục tiêu chính của chúng ta năm nay là gì?)"
+    },
+    {
+      "term": "strategy",
+      "meaning": "[n] /ˈstrætədʒi/ - một kế hoạch hành động",
+      "context": "Xây dựng định hướng",
+      "specialty": "Management",
+      "example": "We need a long-term business strategy. (Chúng ta cần một chiến lược kinh doanh dài hạn.)"
+    },
+    {
+      "term": "forecast",
+      "meaning": "[n] /ˈfɔːrkæst/ - một dự đoán",
+      "context": "Dự báo doanh số",
+      "specialty": "Management",
+      "example": "The sales forecast is optimistic. (Dự báo doanh số bán hàng rất lạc quan.)"
+    },
+    {
+      "term": "resource",
+      "meaning": "[n] /ˈriːsɔːrs/ - một cổ phiếu hoặc nguồn cung cấp",
+      "context": "Phân bổ tài nguyên",
+      "specialty": "Management",
+      "example": "We must allocate our resources wisely. (Chúng ta phải phân bổ tài nguyên một cách khôn ngoan.)"
+    },
+    {
+      "term": "forecast",
+      "meaning": "[v] /ˈfɔːrkæst/ - để dự đoán tương lai",
+      "context": "Dự đoán thị trường",
+      "specialty": "Management",
+      "example": "They forecast a drop in temperature. (Họ dự báo nhiệt độ sẽ giảm.)"
+    },
+    {
+      "term": "plan",
+      "meaning": "[v] /plæn/ - quyết định và sắp xếp",
+      "context": "Lên lịch trình",
+      "specialty": "Management",
+      "example": "We plan to expand our business next year. (Chúng tôi lên kế hoạch mở rộng kinh doanh vào năm tới.)"
+    },
+    {
+      "term": "analyze",
+      "meaning": "[v] /ˈænəlaɪz/ - để kiểm tra chi tiết",
+      "context": "Phân tích dữ liệu",
+      "specialty": "Management",
+      "example": "We need to analyze the results. (Chúng ta cần phân tích kết quả.)"
+    },
+    {
+      "term": "assess",
+      "meaning": "[v] /əˈsɛs/ - để đánh giá hoặc ước tính",
+      "context": "Đánh giá rủi ro",
+      "specialty": "Management",
+      "example": "We need to assess the situation. (Chúng ta cần đánh giá tình hình.)"
+    },
+    {
+      "term": "strategic",
+      "meaning": "[adj] /strəˈtiːdʒɪk/ - liên quan đến kế hoạch dài hạn",
+      "context": "Tầm nhìn vĩ mô",
+      "specialty": "Management",
+      "example": "They made a strategic decision. (Họ đã đưa ra một quyết định mang tính chiến lược.)"
+    },
+    {
+      "term": "realistic",
+      "meaning": "[adj] /ˌriːəˈlɪstɪk/ - thực tế và có thể đạt được",
+      "context": "Kế hoạch khả thi",
+      "specialty": "Management",
+      "example": "Set realistic expectations. (Hãy đặt ra những kỳ vọng thực tế.)"
+    },
+    {
+      "term": "achievable",
+      "meaning": "[adj] /əˈtʃiːvəbl/ - có khả năng thực hiện được",
+      "context": "Chỉ tiêu vừa sức",
+      "specialty": "Management",
+      "example": "Are these goals achievable? (Những mục tiêu này có thể đạt được không?)"
+    },
+    {
+      "term": "effectively",
+      "meaning": "[adv] /ɪˈfɛktɪvli/ - theo cách đạt được kết quả mong muốn",
+      "context": "Vận hành tối ưu",
+      "specialty": "Management",
+      "example": "The manager runs the team effectively. (Người quản lý điều hành đội ngũ một cách hiệu quả.)"
+    },
+    {
+      "term": "attendee",
+      "meaning": "[n] /əˌtɛnˈdiː/ - một người tham dự một cuộc họp",
+      "context": "Hội nghị khách hàng",
+      "specialty": "Corporate Events",
+      "example": "There were over a hundred attendees. (Có hơn một trăm người tham dự.)"
+    },
+    {
+      "term": "schedule",
+      "meaning": "[n] /ˈskɛdʒuːl/ - kế hoạch sự kiện",
+      "context": "Lịch trình hội họp",
+      "specialty": "Corporate Events",
+      "example": "Let's check the schedule. (Hãy kiểm tra lịch trình.)"
+    },
+    {
+      "term": "location",
+      "meaning": "[n] /loʊˈkeɪʃn/ - một địa điểm hoặc vị trí",
+      "context": "Địa điểm tổ chức",
+      "specialty": "Corporate Events",
+      "example": "What is the location of the event? (Địa điểm tổ chức sự kiện ở đâu?)"
+    },
+    {
+      "term": "venue",
+      "meaning": "[n] /ˈvɛnjuː/ - nơi diễn ra sự kiện",
+      "context": "Phòng hội nghị",
+      "specialty": "Corporate Events",
+      "example": "The hotel is a perfect venue. (Khách sạn này là một địa điểm tổ chức hoàn hảo.)"
+    },
+    {
+      "term": "arrange",
+      "meaning": "[v] /əˈreɪndʒ/ - lập kế hoạch và tổ chức",
+      "context": "Sắp xếp chỗ ngồi",
+      "specialty": "Corporate Events",
+      "example": "She arranged the meetings. (Cô ấy đã sắp xếp các cuộc họp.)"
+    },
+    {
+      "term": "hold",
+      "meaning": "[v] /hoʊld/ - tổ chức hoặc tiến hành",
+      "context": "Tiến hành đại hội",
+      "specialty": "Corporate Events",
+      "example": "They will hold the meeting tomorrow. (Họ sẽ tổ chức cuộc họp vào ngày mai.)"
+    },
+    {
+      "term": "participate",
+      "meaning": "[v] /pɑːrˈtɪsɪpeɪt/ - tham gia",
+      "context": "Đóng góp ý kiến",
+      "specialty": "Corporate Events",
+      "example": "Everyone is encouraged to participate. (Mọi người đều được khuyến khích tham gia.)"
+    },
+    {
+      "term": "register",
+      "meaning": "[v] /ˈrɛdʒɪstər/ - để ghi danh hoặc đăng ký",
+      "context": "Đăng ký tham dự",
+      "specialty": "Corporate Events",
+      "example": "You need to register online. (Bạn cần đăng ký trực tuyến.)"
+    },
+    {
+      "term": "convenient",
+      "meaning": "[adj] /kənˈviːniənt/ - phù hợp tốt với nhu cầu của một người",
+      "context": "Địa thế thuận lợi",
+      "specialty": "Corporate Events",
+      "example": "The office location is very convenient. (Vị trí văn phòng rất thuận tiện.)"
+    },
+    {
+      "term": "scheduled",
+      "meaning": "[adj] /ˈskɛdʒuːld/ - lên kế hoạch hoặc sắp xếp cho",
+      "context": "Đúng hẹn quy định",
+      "specialty": "Corporate Events",
+      "example": "The flight is scheduled for noon. (Chuyến bay được lên lịch vào buổi trưa.)"
+    },
+    {
+      "term": "confirmed",
+      "meaning": "[adj] /kənˈfɜːrmd/ - được thành lập hoặc xác minh",
+      "context": "Xác nhận danh sách",
+      "specialty": "Corporate Events",
+      "example": "We have a confirmed booking. (Chúng tôi đã được xác nhận đặt chỗ.)"
+    },
+    {
+      "term": "international",
+      "meaning": "[adj] /ˌɪntəˈnæʃnəl/ - quốc tế",
+      "context": "Hội nhập toàn cầu",
+      "specialty": "Corporate Events",
+      "example": "This is an international conference. (Đây là một hội nghị quốc tế.)"
+    },
+    {
+      "term": "network",
+      "meaning": "[n] /ˈnɛtwɜːrk/ - một nhóm các thiết bị được kết nối với nhau",
+      "context": "Hệ thống nội bộ",
+      "specialty": "Technology",
+      "example": "The office network is offline. (Mạng văn phòng đang ngoại tuyến.)"
+    },
+    {
+      "term": "software",
+      "meaning": "[n] /ˈsɔːftwɛr/ - các chương trình được máy tính sử dụng",
+      "context": "Phần mềm nghiệp vụ",
+      "specialty": "Technology",
+      "example": "We need to update the software. (Chúng ta cần cập nhật phần mềm.)"
+    },
+    {
+      "term": "hardware",
+      "meaning": "[n] /ˈhɑːrdwɛr/ - các thành phần vật lý của máy tính",
+      "context": "Lắp đặt linh kiện",
+      "specialty": "Technology",
+      "example": "The computer hardware needs replacement. (Phần cứng máy tính cần được thay thế.)"
+    },
+    {
+      "term": "virus",
+      "meaning": "[n] /ˈvaɪrəs/ - một chương trình phần mềm độc hại",
+      "context": "An ninh thông tin",
+      "specialty": "Technology",
+      "example": "The system was infected with a virus. (Hệ thống bị nhiễm virus.)"
+    },
+    {
+      "term": "access",
+      "meaning": "[v] /ˈæksɛs/ - để có được hoặc lấy",
+      "context": "Truy cập cơ sở dữ liệu",
+      "specialty": "Technology",
+      "example": "You cannot access this file. (Bạn không thể truy cập tệp tin này.)"
+    },
+    {
+      "term": "install",
+      "meaning": "[v] /ɪnˈstɔːl/ - để thiết lập phần mềm",
+      "context": "Cài đặt hệ thống",
+      "specialty": "Technology",
+      "example": "Install the application on your computer. (Hãy cài đặt ứng dụng trên máy tính của bạn.)"
+    },
+    {
+      "term": "upgrade",
+      "meaning": "[v] /ˈʌpɡreɪd/ - để cải thiện hoặc cập nhật",
+      "context": "Nâng cấp máy chủ",
+      "specialty": "Technology",
+      "example": "Upgrade to the latest version. (Nâng cấp lên phiên bản mới nhất.)"
+    },
+    {
+      "term": "delete",
+      "meaning": "[v] /dɪˈliːt/ - để loại bỏ hoặc xóa",
+      "context": "Gỡ bỏ phần mềm lỗi",
+      "specialty": "Technology",
+      "example": "Do not delete these system files. (Không xóa các tệp hệ thống này.)"
+    },
+    {
+      "term": "digital",
+      "meaning": "[adj] /ˈdɪdʒɪtl/ - liên quan đến việc sử dụng công nghệ máy tính",
+      "context": "Kỷ nguyên số",
+      "specialty": "Technology",
+      "example": "We live in a digital age. (Chúng ta đang sống trong kỷ nguyên số.)"
+    },
+    {
+      "term": "compatible",
+      "meaning": "[adj] /kəmˈpætəbl/ - có thể làm việc cùng nhau",
+      "context": "Tương thích hệ điều hành",
+      "specialty": "Technology",
+      "example": "The software is compatible with Windows. (Phần mềm tương thích với hệ điều hành Windows.)"
+    },
+    {
+      "term": "secure",
+      "meaning": "[adj] /sɪˈkjʊr/ - thoát khỏi nguy hiểm hoặc đe dọa",
+      "context": "Bảo mật tài khoản",
+      "specialty": "Technology",
+      "example": "This is a secure connection. (Đây là một kết nối an toàn.)"
+    },
+    {
+      "term": "efficiently",
+      "meaning": "[adv] /ɪˈfɪʃəntli/ - theo cách đạt được năng suất tối đa",
+      "context": "Tối ưu hiệu năng",
+      "specialty": "Technology",
+      "example": "The network runs efficiently. (Hệ thống mạng chạy rất hiệu quả.)"
+    },
+    {
+      "term": "printer",
+      "meaning": "[n] /ˈprɪntər/ - một máy in tài liệu",
+      "context": "Thiết bị văn phòng",
+      "specialty": "Office Issues",
+      "example": "The printer is out of paper. (Máy in đã hết giấy.)"
+    },
+    {
+      "term": "scanner",
+      "meaning": "[n] /ˈskænər/ - một thiết bị quét tài liệu",
+      "context": "Số hóa tài liệu",
+      "specialty": "Office Issues",
+      "example": "Use the scanner to copy the receipt. (Sử dụng máy quét để số hóa hóa đơn.)"
+    },
+    {
+      "term": "photocopier",
+      "meaning": "[n] /ˈfoʊtoʊˌkɑːpiər/ - một cái máy tạo ra các bản sao giấy",
+      "context": "Sao chụp hồ sơ",
+      "specialty": "Office Issues",
+      "example": "The photocopier needs maintenance. (Máy photocopy cần được bảo trì.)"
+    },
+    {
+      "term": "fax",
+      "meaning": "[n] fæks/ - một máy gửi tài liệu qua đường dây điện thoại",
+      "context": "Gửi công văn nhanh",
+      "specialty": "Office Issues",
+      "example": "Send the document by fax. (Gửi tài liệu này qua máy fax.)"
+    },
+    {
+      "term": "operate",
+      "meaning": "[v] /ˈɑːpəreɪt/ - để điều khiển chức năng của",
+      "context": "Vận hành thiết bị",
+      "specialty": "Office Issues",
+      "example": "Do you know how to operate this machine? (Bạn có biết vận hành chiếc máy này không?)"
+    },
+    {
+      "term": "print",
+      "meaning": "[v] /prɪnt/ - để tạo ra văn bản hoặc hình ảnh bằng văn bản trên giấy",
+      "context": "In ấn tài liệu",
+      "specialty": "Office Issues",
+      "example": "Print the report for the meeting. (In báo cáo cho cuộc họp.)"
+    },
+    {
+      "term": "copy",
+      "meaning": "[v] /ˈkɑːpi/ - để tạo một bản sao",
+      "context": "Bản sao lưu dự phòng",
+      "specialty": "Office Issues",
+      "example": "Please copy this file. (Vui lòng sao lưu tệp này.)"
+    },
+    {
+      "term": "scan",
+      "meaning": "[v] /skæn/ - để chuyển đổi một tài liệu sang dạng kỹ thuật số",
+      "context": "Quét báo cáo doanh thu",
+      "specialty": "Office Issues",
+      "example": "Scan the contract and email it to me. (Quét hợp đồng và gửi email cho tôi.)"
+    },
+    {
+      "term": "functional",
+      "meaning": "[adj] /ˈfʌŋkʃənl/ - thiết thực và hữu ích",
+      "context": "Công năng phòng họp",
+      "specialty": "Office Issues",
+      "example": "The design is simple but functional. (Thiết kế đơn giản nhưng hữu dụng.)"
+    },
+    {
+      "term": "advanced",
+      "meaning": "[adj] /ədˈvænst/ - phát triển cao hoặc phức tạp",
+      "context": "Công nghệ đời mới",
+      "specialty": "Office Issues",
+      "example": "We are using advanced technology. (Chúng tôi đang sử dụng công nghệ tiên tiến.)"
+    },
+    {
+      "term": "operational",
+      "meaning": "[adj] /ˌɑːpəˈreɪʃənl/ - trong tình trạng làm việc",
+      "context": "Đang hoạt động tốt",
+      "specialty": "Office Issues",
+      "example": "The machine is now operational. (Chiếc máy hiện đang hoạt động bình thường.)"
+    },
+    {
+      "term": "automatically",
+      "meaning": "[adv] /ˌɔːtəˈmætɪkli/ - thực hiện mà không có sự can thiệp của con người",
+      "context": "Gửi email tự động",
+      "specialty": "Office Issues",
+      "example": "The door opens automatically. (Cửa mở tự động.)"
+    },
+    {
+      "term": "procedure",
+      "meaning": "[n] /prəˈsiːdʒər/ - một chuỗi các hành động được thực hiện theo một trình tự nhất định",
+      "context": "Quy trình nội bộ",
+      "specialty": "Office Issues",
+      "example": "What is the standard procedure? (Quy trình tiêu chuẩn là gì?)"
+    },
+    {
+      "term": "policy",
+      "meaning": "[n] /ˈpɑːləsi/ - một quá trình hành động được thông qua bởi một doanh nghiệp",
+      "context": "Chính sách nhân sự",
+      "specialty": "Office Issues",
+      "example": "It is company policy. (Đó là chính sách của công ty.)"
+    },
+    {
+      "term": "document",
+      "meaning": "[n] /ˈdɑːkjəmənt/ - một mẩu văn bản, bản in hoặc điện tử",
+      "context": "Văn bản hành chính",
+      "specialty": "Office Issues",
+      "example": "Please sign this document. (Vui lòng ký tài liệu này.)"
+    },
+    {
+      "term": "file",
+      "meaning": "[n] /faɪl/ - một bộ sưu tập tài liệu",
+      "context": "Hồ sơ dự án",
+      "specialty": "Office Issues",
+      "example": "Keep the files in the cabinet. (Giữ các tập tài liệu trong tủ hồ sơ.)"
+    },
+    {
+      "term": "follow",
+      "meaning": "[v] /ˈfɑːloʊ/ - theo sau hoặc theo sau",
+      "context": "Tuân thủ nội quy",
+      "specialty": "Office Issues",
+      "example": "Please follow the guidelines. (Vui lòng tuân thủ các hướng dẫn.)"
+    },
+    {
+      "term": "file",
+      "meaning": "[v] /faɪl/ - để lưu trữ ở một nơi để dễ dàng truy cập",
+      "context": "Lưu trữ văn thư",
+      "specialty": "Office Issues",
+      "example": "File the documents alphabetically. (Lưu trữ tài liệu theo bảng chữ cái.)"
+    },
+    {
+      "term": "organize",
+      "meaning": "[v] /ˈɔːrɡənaɪz/ - sắp xếp một cách có cấu trúc",
+      "context": "Sắp xếp tài liệu",
+      "specialty": "Office Issues",
+      "example": "She organized the files. (Cô ấy đã sắp xếp các tập tin.)"
+    },
+    {
+      "term": "implement",
+      "meaning": "[v] /ˈɪmplɪˌmɛnt/ - đưa vào hành động",
+      "context": "Thực thi kế hoạch",
+      "specialty": "Office Issues",
+      "example": "We need to implement the new plan. (Chúng ta cần thực thi kế hoạch mới.)"
+    },
+    {
+      "term": "systematic",
+      "meaning": "[adj] /ˌsɪstəˈmætɪk/ - thực hiện theo kế hoạch",
+      "context": "Làm việc hệ thống",
+      "specialty": "Office Issues",
+      "example": "We need a systematic approach. (Chúng ta cần một cách tiếp cận có hệ thống.)"
+    },
+    {
+      "term": "efficient",
+      "meaning": "[adj] /ɪˈfɪʃənt/ - đạt được năng suất tối đa với nỗ lực lãng phí tối thiểu",
+      "context": "Tác phong chuyên nghiệp",
+      "specialty": "Office Issues",
+      "example": "We must be efficient in our work. (Chúng ta phải hiệu quả trong công việc.)"
+    },
+    {
+      "term": "official",
+      "meaning": "[adj] /əˈfɪʃəl/ - được ủy quyền hoặc phê duyệt bởi người có thẩm quyền",
+      "context": "Quyết định bổ nhiệm",
+      "specialty": "Office Issues",
+      "example": "This is an official document. (Đây là một tài liệu chính thức.)"
+    },
+    {
+      "term": "normally",
+      "meaning": "[adv] /ˈfɔːməli/ - theo cách thông trang trọng",
+      "context": "Giao tiếp công vụ",
+      "specialty": "Office Issues",
+      "example": "He normally arrives at 9 AM. (Anh ấy thường đến lúc 9 giờ sáng.)"
+    },
+    {
+      "term": "device",
+      "meaning": "[n] /dɪˈvaɪs/ - một thiết bị được chế tạo cho một mục đích cụ thể",
+      "context": "Sử dụng máy móc",
+      "specialty": "Electronics",
+      "example": "The device connects wirelessly. (Thiết bị kết nối không dây.)"
+    },
+    {
+      "term": "component",
+      "meaning": "[n] /kəmˈpoʊnənt/ - một phần hoặc thành phần của một hệ thống lớn hơn",
+      "context": "Lắp ráp bo mạch",
+      "specialty": "Electronics",
+      "example": "These components are made of metal. (Các thành phần này được làm bằng kim loại.)"
+    },
+    {
+      "term": "circuit",
+      "meaning": "[n] /ˈsɜːrkɪt/ - một đường dẫn kín cho dòng điện",
+      "context": "Đo mạch điện tử",
+      "specialty": "Electronics",
+      "example": "The electrical circuit is complete. (Mạch điện đã hoàn thành.)"
+    },
+    {
+      "term": "voltage",
+      "meaning": "[n] /ˈvoʊltɪdʒ/ - một lực điện",
+      "context": "Ổn định dòng điện",
+      "specialty": "Electronics",
+      "example": "Check the voltage before installation. (Kiểm tra điện áp trước khi lắp đặt.)"
+    },
+    {
+      "term": "transmit",
+      "meaning": "[v] /trænsˈmɪt/ - để gửi tín hiệu điện tử",
+      "context": "Truyền dẫn dữ liệu",
+      "specialty": "Electronics",
+      "example": "The tower transmits radio signals. (Tháp truyền tín hiệu vô tuyến.)"
+    },
+    {
+      "term": "convert",
+      "meaning": "[v] /kənˈvɜːrt/ - để thay đổi hình thức của một cái gì đó",
+      "context": "Chuyển đổi tín hiệu",
+      "specialty": "Electronics",
+      "example": "Convert the files to PDF. (Chuyển đổi các tệp sang PDF.)"
+    },
+    {
+      "term": "install",
+      "meaning": "[v] /ɪnˈstɔːl/ - để thiết lập thiết bị hoặc phần mềm",
+      "context": "Lắp đặt hệ thống điện",
+      "specialty": "Electronics",
+      "example": "Install the new light fixtures. (Lắp đặt các thiết bị chiếu sáng mới.)"
+    },
+    {
+      "term": "operate",
+      "meaning": "[v] /ˈɑːpəreɪt/ - để điều khiển hoạt động của một thiết bị",
+      "context": "Điều hành phòng máy",
+      "specialty": "Electronics",
+      "example": "Operate the machinery with caution. (Vận hành máy móc một cách thận trọng.)"
+    },
+    {
+      "term": "electronic",
+      "meaning": "[adj] /ɪˌlɛkˈtrɑːnɪk/ - liên quan đến các thiết bị hoặc mạch chạy bằng điện",
+      "context": "Thiết bị số",
+      "specialty": "Electronics",
+      "example": "We sell electronic equipment. (Chúng tôi bán thiết bị điện tử.)"
+    },
+    {
+      "term": "digital",
+      "meaning": "[adj] /ˈdɪdʒɪtl/ - liên quan đến hoặc liên quan đến công nghệ sử dụng số nhị phân",
+      "context": "Mã hóa nhị phân",
+      "specialty": "Electronics",
+      "example": "The clock has a digital display. (Đồng hồ có màn hình kỹ thuật số.)"
+    },
+    {
+      "term": "automated",
+      "meaning": "[adj] /ˈɔːtəˌmeɪtɪd/ - vận hành bằng thiết bị tự động",
+      "context": "Dây chuyền tự động",
+      "specialty": "Electronics",
+      "example": "The factory uses automated assembly. (Nhà máy sử dụng dây chuyền lắp ráp tự động.)"
+    },
+    {
+      "term": "sophisticated",
+      "meaning": "[adj] /səˈfɪstɪkeɪtɪd/ - theo cách phức tạp",
+      "context": "Hệ thống vi mạch",
+      "specialty": "Electronics",
+      "example": "She has sophisticated taste. (Cô ấy có gu thẩm mỹ tinh tế.)"
+    },
+    {
+      "term": "letter",
+      "meaning": "[n] /ˈlɛtər/ - một giao tiếp bằng văn bản hoặc in",
+      "context": "Gửi thư xác nhận",
+      "specialty": "Communications",
+      "example": "I received a formal letter today. (Tôi đã nhận được một bức thư trang trọng hôm nay.)"
+    },
+    {
+      "term": "email",
+      "meaning": "[n] /ˈiːmeɪl/ - thư điện tử",
+      "context": "Trao đổi qua email",
+      "specialty": "Communications",
+      "example": "Send me an email with details. (Gửi cho tôi một email kèm chi tiết.)"
+    },
+    {
+      "term": "memo",
+      "meaning": "[n] /ˈmɛmoʊ/ - một tin nhắn bằng văn bản",
+      "context": "Thông báo nội bộ",
+      "specialty": "Communications",
+      "example": "The director sent a memo to all staff. (Giám đốc đã gửi một thông báo nội bộ tới toàn thể nhân viên.)"
+    },
+    {
+      "term": "recipient",
+      "meaning": "[n] /rɪˈsɪpiənt/ - một người nhận được một cái gì đó",
+      "context": "Gửi đúng địa chỉ",
+      "specialty": "Communications",
+      "example": "Who is the recipient of the package? (Ai là người nhận bưu kiện này?)"
+    },
+    {
+      "term": "compose",
+      "meaning": "[v] /kəmˈpoʊz/ - để tạo hoặc viết",
+      "context": "Soạn thảo công văn",
+      "specialty": "Communications",
+      "example": "Compose a new email. (Soạn một email mới.)"
+    },
+    {
+      "term": "send",
+      "meaning": "[v] /sɛnd/ - khiến phải đi hoặc bị bắt",
+      "context": "Chuyển phát bưu phẩm",
+      "specialty": "Communications",
+      "example": "Send the package by airmail. (Gửi bưu kiện này bằng đường hàng không.)"
+    },
+    {
+      "term": "receive",
+      "meaning": "[v] /rɪˈsiːv/ - để có được hoặc được cho",
+      "context": "Nhận bưu phẩm ký nhận",
+      "specialty": "Communications",
+      "example": "Did you receive the invitation? (Bạn đã nhận được lời mời chưa?)"
+    },
+    {
+      "term": "reply",
+      "meaning": "[v] /rɪˈplaɪ/ - để trả lời bằng lời nói hoặc văn bản",
+      "context": "Phản hồi thư khách",
+      "specialty": "Communications",
+      "example": "Reply to the message immediately. (Phản hồi tin nhắn ngay lập tức.)"
+    },
+    {
+      "term": "formal",
+      "meaning": "[adj] /ˈfɔːrml/ - tuân theo các quy ước đã được thiết lập",
+      "context": "Văn phong trang trọng",
+      "specialty": "Communications",
+      "example": "Wear formal attire to the dinner. (Mặc trang phục trang trọng tới bữa tối.)"
+    },
+    {
+      "term": "urgent",
+      "meaning": "[adj] /ˈɜːrdʒənt/ - yêu cầu hành động hoặc sự chú ý ngay lập tức",
+      "context": "Thư khẩn cấp",
+      "specialty": "Communications",
+      "example": "This is an urgent matter. (Đây là một vấn đề khẩn cấp.)"
+    },
+    {
+      "term": "brief",
+      "meaning": "[adj] /briːf/ - ngắn trong thời gian hoặc mức độ",
+      "context": "Bản tin vắn",
+      "specialty": "Communications",
+      "example": "We had a brief conversation. (Chúng tôi đã có một cuộc trò chuyện ngắn.)"
+    },
+    {
+      "term": "annually",
+      "meaning": "[adv] /ˈænjuəli/ - hàng năm",
+      "context": "Báo cáo thường niên",
+      "specialty": "Communications",
+      "example": "We review our goals annually. (Chúng tôi đánh giá mục tiêu hàng năm.)"
+    },
+    {
+      "term": "candidate",
+      "meaning": "[n] /ˈkændɪˌdeɪt/ - một người đang xin việc",
+      "context": "Sàng lọc hồ sơ ứng viên",
+      "specialty": "Human Resources",
+      "example": "He is a strong candidate for the job. (Anh ấy là một ứng viên tiềm năng cho công việc.)"
+    },
+    {
+      "term": "resume",
+      "meaning": "[n] /ˈrɛzjumeɪ/ - một tài liệu tóm tắt kinh nghiệm làm việc và trình độ của một người",
+      "context": "Đọc CV tiếng Anh",
+      "specialty": "Human Resources",
+      "example": "Send your resume and cover letter. (Gửi sơ yếu lý lịch và thư xin việc của bạn.)"
+    },
+    {
+      "term": "vacancy",
+      "meaning": "[n] /ˈveɪkənsi/ - một vị trí hoặc công việc trống",
+      "context": "Vị trí tuyển dụng",
+      "specialty": "Human Resources",
+      "example": "There is a vacancy in the sales department. (Có một vị trí trống trong phòng bán hàng.)"
+    },
+    {
+      "term": "qualification",
+      "meaning": "[n] /ˌkwɑːlɪfɪˈkeɪʃn/ - một kỹ năng hoặc kinh nghiệm cần thiết cho một công việc",
+      "context": "Yêu cầu bằng cấp",
+      "specialty": "Human Resources",
+      "example": "What qualifications do you need? (Bạn cần những bằng cấp chuyên môn nào?)"
+    },
+    {
+      "term": "recruit",
+      "meaning": "[v] /rɪˈkruːt/ - để tìm và tuyển dụng những ứng viên phù hợp",
+      "context": "Chiêu mộ nhân tài",
+      "specialty": "Human Resources",
+      "example": "We are trying to recruit new talent. (Chúng tôi đang cố gắng chiêu mộ nhân tài mới.)"
+    },
+    {
+      "term": "advertise",
+      "meaning": "[v] /ˈædvərtaɪz/ - để thúc đẩy việc mở việc làm",
+      "context": "Đăng tin tuyển dụng",
+      "specialty": "Human Resources",
+      "example": "Advertise the position on job boards. (Đăng tin tuyển dụng trên các bảng tin việc làm.)"
+    },
+    {
+      "term": "apply",
+      "meaning": "[v] /əˈplaɪ/ - để thực hiện một yêu cầu chính thức cho một công việc",
+      "context": "Nộp đơn xin việc",
+      "specialty": "Human Resources",
+      "example": "Apply online before the deadline. (Nộp đơn trực tuyến trước thời hạn.)"
+    },
+    {
+      "term": "shortlist",
+      "meaning": "[v] /ˈʃɔːrt.lɪst/ - để chọn một số lượng nhỏ các ứng cử viên từ tất cả các ứng viên",
+      "context": "Vòng phỏng vấn sơ loại",
+      "specialty": "Human Resources",
+      "example": "They shortlisted five candidates. (Họ đã đưa năm ứng viên vào vòng phỏng vấn sơ loại.)"
+    },
+    {
+      "term": "suitable",
+      "meaning": "[adj] /ˈsuːtəbl/ - thích hợp cho một công việc hoặc vai trò cụ thể",
+      "context": "Độ tương thích năng lực",
+      "specialty": "Human Resources",
+      "example": "Find a suitable date for the interview. (Tìm một ngày thích hợp cho cuộc phỏng vấn.)"
+    },
+    {
+      "term": "experienced",
+      "meaning": "[adj] /ɪkˈspɪriənst/ - có kiến thức hoặc kỹ năng từ thực hành hoặc kinh nghiệm",
+      "context": "Ứng viên dày dặn kinh nghiệm",
+      "specialty": "Human Resources",
+      "example": "We need an experienced programmer. (Chúng tôi cần một lập trình viên có kinh nghiệm.)"
+    },
+    {
+      "term": "competitive",
+      "meaning": "[adj] /kəmˈpɛtətɪv/ - đặc trưng bởi sự cạnh tranh",
+      "context": "Mức lương cạnh tranh",
+      "specialty": "Human Resources",
+      "example": "The company offers a competitive salary. (Công ty đưa ra một mức lương cạnh tranh.)"
+    },
+    {
+      "term": "successfully",
+      "meaning": "[adv] /səkˈsɛsfəli/ - theo cách đạt được kết quả mong muốn",
+      "context": "Tuyển dụng thành công",
+      "specialty": "Human Resources",
+      "example": "He successfully completed the training. (Anh ấy đã hoàn thành xuất sắc khóa đào tạo.)"
+    },
+    {
+      "term": "application",
+      "meaning": "[n] /ˌæplɪˈkeɪʃn/ - một yêu cầu chính thức cho việc làm",
+      "context": "Xử lý đơn ứng tuyển",
+      "specialty": "Human Resources",
+      "example": "Your application has been received. (Đơn ứng tuyển của bạn đã được nhận.)"
+    },
+    {
+      "term": "interview",
+      "meaning": "[n] /ˈɪntərˌvjuː/ - một cuộc họp để thẩm vấn người xin việc",
+      "context": "Phỏng vấn trực tiếp",
+      "specialty": "Human Resources",
+      "example": "Prepare well for the interview. (Hãy chuẩn bị thật tốt cho cuộc phỏng vấn.)"
+    },
+    {
+      "term": "reference",
+      "meaning": "[n] /ˈrɛfrəns/ - một người có thể giới thiệu một ứng cử viên",
+      "context": "Xác minh người giới thiệu",
+      "specialty": "Human Resources",
+      "example": "Provide at least two references. (Cung cấp ít nhất hai người giới thiệu.)"
+    },
+    {
+      "term": "portfolio",
+      "meaning": "[n] /pɔːrtˈfoʊlioʊ/ - một bộ sưu tập các mẫu công việc",
+      "context": "Hồ sơ năng lực thiết kế",
+      "specialty": "Human Resources",
+      "example": "Bring your portfolio to the interview. (Mang theo hồ sơ năng lực của bạn đến buổi phỏng vấn.)"
+    },
+    {
+      "term": "apply",
+      "meaning": "[v] /əˈplaɪ/ - để thực hiện một yêu cầu chính thức cho một công việc",
+      "context": "Nộp đơn xét duyệt",
+      "specialty": "Human Resources",
+      "example": "She applied for the manager position. (Cô ấy đã nộp đơn ứng tuyển vào vị trí quản lý.)"
+    },
+    {
+      "term": "interview",
+      "meaning": "[v] /ˈɪntərˌvjuː/ - để hỏi người xin việc",
+      "context": "Đặt câu hỏi phỏng vấn",
+      "specialty": "Human Resources",
+      "example": "They will interview candidates next week. (Họ sẽ phỏng vấn các ứng viên vào tuần tới.)"
+    },
+    {
+      "term": "evaluate",
+      "meaning": "[v] /ɪˈvæljueɪt/ - để đánh giá giá trị hoặc chất lượng",
+      "context": "Đánh giá ứng viên",
+      "specialty": "Human Resources",
+      "example": "We need to evaluate the proposals. (Chúng tôi cần đánh giá các đề xuất.)"
+    },
+    {
+      "term": "prepare",
+      "meaning": "[v] /prɪˈpɛr/ - chuẩn bị sẵn sàng cho một mục đích cụ thể",
+      "context": "Chuẩn bị câu trả lời",
+      "specialty": "Human Resources",
+      "example": "Prepare the documents for the audit. (Chuẩn bị các tài liệu cho việc kiểm toán.)"
+    },
+    {
+      "term": "confident",
+      "meaning": "[adj] /ˈkɑːnfɪdənt/ - có sự tự tin",
+      "context": "Tác phong tự tin",
+      "specialty": "Human Resources",
+      "example": "Be confident in your abilities. (Hãy tự tin vào khả năng của mình.)"
+    },
+    {
+      "term": "professional",
+      "meaning": "[adj] /prəˈfɛʃənl/ - liên quan đến hoặc phù hợp với một nghề nghiệp",
+      "context": "Môi trường chuyên nghiệp",
+      "specialty": "Human Resources",
+      "example": "He has a professional attitude. (Anh ấy có thái độ làm việc rất chuyên nghiệp.)"
+    },
+    {
+      "term": "suitable",
+      "meaning": "[adj] /ˈsuːtəbl/ - thích hợp cho một vai trò hoặc tình huống cụ thể",
+      "context": "Lựa chọn người phù hợp nhất",
+      "specialty": "Human Resources",
+      "example": "The candidate seems suitable. (Ứng viên có vẻ phù hợp.)"
+    },
+    {
+      "term": "thoroughly",
+      "meaning": "[adv] /ˈθɜːroʊli/ - một cách đầy đủ và chi tiết",
+      "context": "Phân tích kỹ lưỡng",
+      "specialty": "Human Resources",
+      "example": "Clean the kitchen thoroughly. (Hãy lau dọn nhà bếp thật sạch sẽ.)"
+    },
+    {
+      "term": "hire",
+      "meaning": "[n] /ˈhaɪər/ - một người đã được tuyển dụng",
+      "context": "Nhân viên mới tuyển",
+      "specialty": "Human Resources",
+      "example": "We welcome our new hires. (Chúng tôi chào đón các nhân sự mới được tuyển dụng.)"
+    },
+    {
+      "term": "orientation",
+      "meaning": "[n] /ˌɔːriɛnˈteɪʃn/ - buổi giới thiệu dành cho nhân viên mới",
+      "context": "Đào tạo nhập môn",
+      "specialty": "Human Resources",
+      "example": "Attend the orientation session tomorrow. (Hãy tham gia buổi hướng dẫn nhập môn vào ngày mai.)"
+    },
+    {
+      "term": "training",
+      "meaning": "[n] /ˈtreɪnɪŋ/ - quá trình học các kỹ năng mới",
+      "context": "Khóa huấn luyện nghiệp vụ",
+      "specialty": "Human Resources",
+      "example": "The company provides employee training. (Công ty cung cấp khóa đào tạo cho nhân viên.)"
+    },
+    {
+      "term": "probation",
+      "meaning": "[n] /proʊˈbeɪʃn/ - thời gian thử việc cho nhân viên mới",
+      "context": "Hợp đồng thử việc",
+      "specialty": "Human Resources",
+      "example": "The job has a three-month probation period. (Công việc này có thời gian thử việc là ba tháng.)"
+    },
+    {
+      "term": "hire",
+      "meaning": "[v] /ˈhaɪər/ - tuyển dụng ai đó",
+      "context": "Ký hợp đồng lao động",
+      "specialty": "Human Resources",
+      "example": "We plan to hire more staff. (Chúng tôi lên kế hoạch tuyển thêm nhân sự.)"
+    },
+    {
+      "term": "train",
+      "meaning": "[v] /treɪn/ - để dạy hoặc phát triển kỹ năng",
+      "context": "Đào tạo nhân lực",
+      "specialty": "Human Resources",
+      "example": "We train employees in customer service. (Chúng tôi đào tạo nhân viên về dịch vụ khách hàng.)"
+    },
+    {
+      "term": "coach",
+      "meaning": "[v] /koʊtʃ/ - để hướng dẫn và hướng dẫn",
+      "context": "Kèm cặp chỉ dẫn",
+      "specialty": "Human Resources",
+      "example": "The manager will coach you. (Quản lý sẽ hướng dẫn trực tiếp cho bạn.)"
+    },
+    {
+      "term": "mentor",
+      "meaning": "[v] /ˈmɛntɔːr/ - để tư vấn hoặc đào tạo một ai đó",
+      "context": "Cố vấn nghề nghiệp",
+      "specialty": "Human Resources",
+      "example": "She mentors young professionals. (Cô ấy cố vấn cho các chuyên gia trẻ tuổi.)"
+    },
+    {
+      "term": "skilled",
+      "meaning": "[adj] /skɪld/ - có khả năng làm tốt điều gì đó",
+      "context": "Thợ lành nghề",
+      "specialty": "Human Resources",
+      "example": "He is a skilled engineer. (Anh ấy là một kỹ sư lành nghề.)"
+    },
+    {
+      "term": "experienced",
+      "meaning": "[adj] /ɪkˈspɪriənst/ - đã đạt được kiến thức hoặc kỹ năng",
+      "context": "Trải nghiệm thực tế",
+      "specialty": "Human Resources",
+      "example": "Our team has experienced professionals. (Đội ngũ của chúng tôi có những chuyên gia giàu kinh nghiệm.)"
+    },
+    {
+      "term": "knowledgeable",
+      "meaning": "[adj] /ˈnɒlɪdʒəbl/ - được thông tin và giáo dục tốt",
+      "context": "Am hiểu kiến thức chuyên môn",
+      "specialty": "Human Resources",
+      "example": "She is knowledgeable about digital marketing. (Cô ấy rất am hiểu về tiếp thị kỹ thuật số.)"
+    },
+    {
+      "term": "adequately",
+      "meaning": "[adv] /ˈædɪkwətli/ - theo cách đầy đủ",
+      "context": "Chuẩn bị đầy đủ",
+      "specialty": "Human Resources",
+      "example": "Are you adequately prepared? (Bạn đã chuẩn bị đầy đủ chưa?)"
+    },
+    {
+      "term": "salary",
+      "meaning": "[n] /ˈsæləri/ - một khoản thanh toán cố định thường xuyên cho công việc",
+      "context": "Bảng lương hàng tháng",
+      "specialty": "Finance",
+      "example": "She receives a competitive salary. (Cô ấy nhận được một mức lương cạnh tranh.)"
+    },
+    {
+      "term": "benefit",
+      "meaning": "[n] /ˈbɛnɪfɪt/ - một lợi thế hoặc lợi nhuận thu được từ việc làm",
+      "context": "Phúc lợi nhân sự",
+      "specialty": "Finance",
+      "example": "Employee benefits include health insurance. (Phúc lợi nhân viên bao gồm bảo hiểm y tế.)"
+    },
+    {
+      "term": "compensation",
+      "meaning": "[n] /ˌkɒmpɛnˈseɪʃn/ - cái gì đó, thường là tiền, được trao cho ai đó vì công việc",
+      "context": "Chính sách đền bù",
+      "specialty": "Finance",
+      "example": "The compensation package is generous. (Gói bồi thường/phúc lợi rất hào phóng.)"
+    },
+    {
+      "term": "deduction",
+      "meaning": "[n] /dɪˈdʌkʃn/ - một số tiền được trừ vào tiền lương",
+      "context": "Khấu trừ thuế thu nhập",
+      "specialty": "Finance",
+      "example": "Tax deductions are shown on the payslip. (Các khoản khấu trừ thuế được hiển thị trên phiếu lương.)"
+    },
+    {
+      "term": "earn",
+      "meaning": "[v] /ɜːrn/ - nhận tiền để đổi lấy công việc",
+      "context": "Kiếm thu nhập chính đáng",
+      "specialty": "Finance",
+      "example": "He earns a good living. (Anh ấy kiếm được mức thu nhập khá tốt.)"
+    },
+    {
+      "term": "negotiate",
+      "meaning": "[v] /nɪˈɡoʊʃieɪt/ - để thảo luận về các điều khoản và điều kiện",
+      "context": "Đàm phán lương bổng",
+      "specialty": "Finance",
+      "example": "Negotiate your salary before signing. (Đàm phán lương của bạn trước khi ký hợp đồng.)"
+    },
+    {
+      "term": "contribute",
+      "meaning": "[v] /kənˈtrɪbjuːt/ - đưa (tiền hoặc nguồn lực) cho cái gì đó",
+      "context": "Đóng góp bảo hiểm xã hội",
+      "specialty": "Finance",
+      "example": "Employees contribute to the pension fund. (Nhân viên đóng góp vào quỹ lương hưu.)"
+    },
+    {
+      "term": "increase",
+      "meaning": "[v] /ɪnˈkriːs/ - để trở thành hoặc làm cho lớn hơn",
+      "context": "Xét duyệt tăng lương",
+      "specialty": "Finance",
+      "example": "We plan to increase sales. (Chúng tôi lên kế hoạch tăng doanh số.)"
+    },
+    {
+      "term": "generous",
+      "meaning": "[adj] /ˈdʒɛnərəs/ - sẵn sàng cho đi nhiều hơn",
+      "context": "Lương thưởng hào phóng",
+      "specialty": "Finance",
+      "example": "Thank you for your generous donation. (Cảm ơn vì sự quyên góp hào phóng của bạn.)"
+    },
+    {
+      "term": "competitive",
+      "meaning": "[adj] /kəmˈpɛtətɪv/ - có sự cạnh tranh mạnh mẽ",
+      "context": "Mức đãi ngộ cạnh tranh",
+      "specialty": "Finance",
+      "example": "The company operates in a competitive market. (Công ty hoạt động trong một thị trường cạnh tranh.)"
+    },
+    {
+      "term": "additional",
+      "meaning": "[adj] /əˈdɪʃənl/ - thêm hoặc bổ sung",
+      "context": "Phụ cấp bổ sung",
+      "specialty": "Finance",
+      "example": "There are additional charges. (Có các khoản phí bổ sung.)"
+    },
+    {
+      "term": "significantly",
+      "meaning": "[adv] /sɪɡˈnɪfɪkəntli/ - một cách đủ lớn hoặc quan trọng",
+      "context": "Tăng trưởng đáng kể",
+      "specialty": "Finance",
+      "example": "Profits have increased significantly. (Lợi nhuận đã tăng trưởng một cách đáng kể.)"
+    },
+    {
+      "term": "promotion",
+      "meaning": "[n] /prəˈmoʊʃn/ - chuyển lên cấp bậc hoặc vị trí cao hơn",
+      "context": "Quyết định thăng chức",
+      "specialty": "Human Resources",
+      "example": "She received a promotion to manager. (Cô ấy đã nhận quyết định thăng chức lên quản lý.)"
+    },
+    {
+      "term": "pension",
+      "meaning": "[n] /ˈpɛnʃn/ - một khoản thanh toán thường xuyên được thực hiện trong thời gian nghỉ hưu",
+      "context": "Chế độ lương hưu",
+      "specialty": "Human Resources",
+      "example": "He lives on his pension. (Ông ấy sống dựa vào tiền lương hưu.)"
+    },
+    {
+      "term": "award",
+      "meaning": "[n] /əˈwɔːrd/ - một giải thưởng hoặc sự công nhận cho thành tích",
+      "context": "Giải thưởng vinh danh",
+      "specialty": "Human Resources",
+      "example": "She won an award for excellence. (Cô ấy đã giành được giải thưởng cho sự xuất sắc.)"
+    },
+    {
+      "term": "recognition",
+      "meaning": "[n] /ˌrɛkəɡˈnɪʃn/ - sự thừa nhận hoặc đánh giá cao",
+      "context": "Ghi nhận đóng góp",
+      "specialty": "Human Resources",
+      "example": "He received recognition for his hard work. (Anh ấy đã nhận được sự ghi nhận cho sự chăm chỉ của mình.)"
+    },
+    {
+      "term": "promote",
+      "meaning": "[v] /prəˈmoʊt/ - để thăng tiến trong cấp bậc hoặc vị trí",
+      "context": "Thăng cấp quản lý",
+      "specialty": "Human Resources",
+      "example": "They promote from within the company. (Họ thăng tiến nhân sự từ nội bộ công ty.)"
+    },
+    {
+      "term": "award",
+      "meaning": "[v] /əˈwɔːrd/ - trao giải thưởng hoặc sự công nhận",
+      "context": "Trao tặng bằng khen",
+      "specialty": "Human Resources",
+      "example": "The committee awarded him a scholarship. (Ủy ban đã trao tặng học bổng cho anh ấy.)"
+    },
+    {
+      "term": "retire",
+      "meaning": "[v] /rɪˈtaɪər/ - rời bỏ công việc của một người và ngừng làm việc",
+      "context": "Về hưu an nhàn",
+      "specialty": "Human Resources",
+      "example": "He plans to retire next year. (Anh ấy lên kế hoạch nghỉ hưu vào năm tới.)"
+    },
+    {
+      "term": "achieve",
+      "meaning": "[v] /əˈtʃiːv/ - để đạt được một mục tiêu hoặc tiêu chuẩn",
+      "context": "Đạt doanh số kỷ lục",
+      "specialty": "Human Resources",
+      "example": "You can achieve anything. (Bạn có thể đạt được bất cứ điều gì.)"
+    },
+    {
+      "term": "deserving",
+      "meaning": "[adj] /dɪˈzɜːrvɪŋ/ - xứng đáng với cái gì đó",
+      "context": "Phần thưởng xứng đáng",
+      "specialty": "Human Resources",
+      "example": "Support a deserving charity. (Hãy ủng hộ một tổ chức từ thiện xứng đáng.)"
+    },
+    {
+      "term": "eligible",
+      "meaning": "[adj] /ˈe-lɪ-dʒə-bl/ - đủ điều kiện hoặc được phép",
+      "context": "Đủ tiêu chuẩn xét thưởng",
+      "specialty": "Human Resources",
+      "example": "Who is eligible to apply? (Ai đủ điều kiện ứng tuyển?)"
+    },
+    {
+      "term": "outstanding",
+      "meaning": "[adj] /aʊtˈstændɪŋ/ - đặc biệt tốt",
+      "context": "Thành tích xuất sắc",
+      "specialty": "Human Resources",
+      "example": "Give an outstanding performance. (Mang lại một màn trình diễn xuất sắc.)"
+    },
+    {
+      "term": "legally",
+      "meaning": "[adv] /ˈliːɡəli/ - phù hợp với luật pháp",
+      "context": "Giải quyết tranh tụng",
+      "specialty": "Human Resources",
+      "example": "The contract is legally binding. (Hợp đồng có tính ràng buộc về mặt pháp lý.)"
+    },
+    {
+      "term": "product",
+      "meaning": "[n] /ˈprɒdʌkt/ - một mặt hàng được chào bán",
+      "context": "Trưng bày hàng hóa",
+      "specialty": "Purchasing",
+      "example": "The company launched a new product. (Công ty đã cho ra mắt một sản phẩm mới.)"
+    },
+    {
+      "term": "price",
+      "meaning": "[n] /praɪs/ - số tiền cần thiết cho một sản phẩm",
+      "context": "Thương thảo giá",
+      "specialty": "Purchasing",
+      "example": "What is the price of this item? (Giá bán của mặt hàng này là bao nhiêu?)"
+    },
+    {
+      "term": "discount",
+      "meaning": "[n] /ˈdɪskaʊnt/ - giảm giá",
+      "context": "Chương trình khuyến mãi",
+      "specialty": "Purchasing",
+      "example": "Get a 20% discount on clothing. (Được giảm giá 20% cho sản phẩm quần áo.)"
+    },
+    {
+      "term": "customer",
+      "meaning": "[n] /ˈkʌstəmər/ - một người mua hàng hóa hoặc dịch vụ",
+      "context": "Giải quyết khiếu nại khách",
+      "specialty": "Purchasing",
+      "example": "Greet every customer with a smile. (Chào đón mọi khách hàng bằng một nụ cười.)"
+    },
+    {
+      "term": "purchase",
+      "meaning": "[v] /ˈpɜːrtʃəs/ - mua sắm, thanh toán",
+      "context": "Mua sắm tiêu dùng",
+      "specialty": "Purchasing",
+      "example": "Purchase tickets in advance. (Hãy mua sắm vé từ trước.)"
+    }
+  ]
+}

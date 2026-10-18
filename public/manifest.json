@@ -1,0 +1,21 @@
+{
+  "short_name": "TOEIC Vocab",
+  "name": "Đêm Học Bài - TOEIC Vocabulary & Terminology App",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/color/192/000000/book-shelf.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://img.icons8.com/color/512/000000/book-shelf.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#14181F",
+  "theme_color": "#14181F",
+  "display": "standalone",
+  "orientation": "portrait"
+}
