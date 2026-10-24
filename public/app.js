@@ -94,6 +94,22 @@ const API = {
     return res.json();
   },
 
+  async getWordDropWords({ topicId = '', limit = 30, mode = 'srs' } = {}) {
+    let url = `/api/word-drop/words?limit=${limit}&mode=${mode}`;
+    if (topicId) url += `&topic_id=${encodeURIComponent(topicId)}`;
+    const res = await fetch(url);
+    return res.json();
+  },
+
+  async postWordDropResult(payload) {
+    const res = await fetch('/api/word-drop/result', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    return res.json();
+  },
+
   async exportBackup() {
     window.location.href = '/api/export-backup';
   },
@@ -254,7 +270,8 @@ const App = {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
 
-    const targetView = document.getElementById(viewName);
+    const effectiveId = (viewName === 'word-drop') ? 'view-word-drop' : viewName;
+    const targetView = document.getElementById(effectiveId);
     if (targetView) {
       targetView.classList.add('active');
       this.currentView = viewName;
@@ -279,6 +296,8 @@ const App = {
         this.startClozeSession();
       } else if (viewName === 'speedtest') {
         this.startSpeedTest();
+      } else if (viewName === 'word-drop' || viewName === 'view-word-drop') {
+        this.initWordDropView();
       } else if (viewName === 'settings') {
         this.loadSettings();
       }
@@ -1872,8 +1891,648 @@ const App = {
     } catch (e) {
       showToast('Lỗi lưu từ SRS: ' + e.message);
     }
+  },
+
+  // -------------------------------------------------------------
+  // WORD DROP GAME INTEGRATION
+  // -------------------------------------------------------------
+  wordDropGameInstance: null,
+
+  async initWordDropView() {
+    // Populate topic dropdown if empty
+    const select = document.getElementById('word-drop-topic-select');
+    if (select && select.options.length <= 1) {
+      try {
+        const topics = await API.getTopics();
+        select.innerHTML = '<option value="">Tất cả chủ đề (Mặc định)</option>';
+        topics.forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t.id;
+          opt.innerText = `${t.name} (${t.word_count} từ)`;
+          select.appendChild(opt);
+        });
+      } catch (e) {
+        console.error('Lỗi nạp topics cho Word Drop:', e);
+      }
+    }
+
+    const canvas = document.getElementById('word-drop-canvas');
+    const input = document.getElementById('word-drop-input');
+
+    if (!this.wordDropGameInstance) {
+      this.wordDropGameInstance = new WordDropGame(canvas, input, {
+        onGameEnd: () => {
+          // Refresh dashboard data silently in background
+        }
+      });
+
+      document.getElementById('btn-word-drop-start').onclick = () => this.wordDropGameInstance.start();
+      document.getElementById('btn-word-drop-modal-start').onclick = () => this.wordDropGameInstance.start();
+      document.getElementById('btn-word-drop-pause').onclick = () => {
+        if (this.wordDropGameInstance.isPaused) {
+          this.wordDropGameInstance.resume();
+          document.getElementById('btn-word-drop-pause').innerText = 'Tạm dừng';
+        } else {
+          this.wordDropGameInstance.pause();
+          document.getElementById('btn-word-drop-pause').innerText = 'Tiếp tục ▶️';
+        }
+      };
+      document.getElementById('btn-word-drop-restart').onclick = () => this.wordDropGameInstance.restart();
+      document.getElementById('btn-word-drop-play-again').onclick = () => this.wordDropGameInstance.restart();
+    } else {
+      this.wordDropGameInstance.resizeCanvas();
+    }
   }
 };
+
+// =============================================================
+// WORD DROP GAME CLASS
+// =============================================================
+class WordDropGame {
+  constructor(canvas, input, config = {}) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.input = input;
+
+    // Default configuration
+    this.defaultConfig = {
+      fallSpeed: 1.2,        // px/frame ban đầu
+      spawnInterval: 2500,   // ms giữa 2 từ rơi
+      speedIncreasePerLevel: 0.3,
+      lives: 3,
+      levelUpEvery: 10,      // số từ đúng để lên level
+    };
+
+    this.config = { ...this.defaultConfig, ...config };
+
+    // State
+    this.wordsQueue = [];      // pool of words fetched from API
+    this.activeWords = [];     // currently falling words on canvas
+    this.particles = [];       // particle explosion effects
+    this.score = 0;
+    this.level = 1;
+    this.lives = this.config.lives;
+    this.combo = 0;
+    this.correctCount = 0;
+    this.missedCount = 0;
+    this.sessionHistory = [];  // [{word_id, typed_correctly, response_time_ms}]
+    this.activeWordSpawnTimes = new Map(); // word.id -> spawn timestamp
+
+    this.isRunning = false;
+    this.isPaused = false;
+    this.animationFrameId = null;
+    this.spawnTimerId = null;
+    this.lastFrameTime = performance.now();
+
+    this.setupListeners();
+    this.resizeCanvas();
+  }
+
+  setupListeners() {
+    window.addEventListener('resize', () => this.resizeCanvas());
+
+    this.input.addEventListener('input', () => this.checkInput());
+    this.input.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        this.input.value = '';
+      }
+    });
+  }
+
+  resizeCanvas() {
+    if (!this.canvas) return;
+    const parent = this.canvas.parentElement;
+    if (!parent) return;
+
+    const width = parent.clientWidth || 800;
+    const height = parent.clientHeight || 500;
+
+    // Use device pixel ratio for crystal clear text rendering on high DPI
+    const dpr = window.devicePixelRatio || 1;
+    this.canvas.width = width * dpr;
+    this.canvas.height = height * dpr;
+    this.canvas.style.width = `${width}px`;
+    this.canvas.style.height = `${height}px`;
+
+    this.ctx.resetTransform();
+    this.ctx.scale(dpr, dpr);
+    this.cssWidth = width;
+    this.cssHeight = height;
+  }
+
+  async start() {
+    this.cleanup();
+    this.resizeCanvas();
+
+    const topicSelect = document.getElementById('word-drop-topic-select');
+    const modeSelect = document.getElementById('word-drop-mode-select');
+    const topicId = topicSelect ? topicSelect.value : '';
+    const mode = modeSelect ? modeSelect.value : 'srs';
+
+    // UI overlays
+    document.getElementById('word-drop-start-overlay').style.display = 'none';
+    document.getElementById('word-drop-gameover-overlay').style.display = 'none';
+    document.getElementById('btn-word-drop-pause').innerText = 'Tạm dừng';
+
+    try {
+      const words = await API.getWordDropWords({ topicId, limit: 30, mode });
+      if (!words || words.length === 0) {
+        showToast('Không có từ vựng nào trong chủ đề này!');
+        return;
+      }
+
+      this.wordsQueue = [...words];
+      shuffle(this.wordsQueue);
+
+      this.score = 0;
+      this.level = 1;
+      this.lives = this.config.lives;
+      this.combo = 0;
+      this.correctCount = 0;
+      this.missedCount = 0;
+      this.sessionHistory = [];
+      this.activeWords = [];
+      this.particles = [];
+      this.activeWordSpawnTimes.clear();
+
+      this.currentFallSpeed = this.config.fallSpeed;
+      this.currentSpawnInterval = this.config.spawnInterval;
+
+      this.isRunning = true;
+      this.isPaused = false;
+      this.updateHUD();
+
+      this.input.value = '';
+      this.input.focus();
+
+      // Spawn first word immediately
+      this.spawnWord();
+      this.scheduleNextSpawn();
+
+      this.lastFrameTime = performance.now();
+      this.animationFrameId = requestAnimationFrame((t) => this.updateFrame(t));
+    } catch (e) {
+      showToast('Lỗi nạp từ vựng: ' + e.message);
+    }
+  }
+
+  pause() {
+    if (!this.isRunning || this.isPaused) return;
+    this.isPaused = true;
+    cancelAnimationFrame(this.animationFrameId);
+    clearTimeout(this.spawnTimerId);
+  }
+
+  resume() {
+    if (!this.isRunning || !this.isPaused) return;
+    this.isPaused = false;
+    this.lastFrameTime = performance.now();
+    this.scheduleNextSpawn();
+    this.animationFrameId = requestAnimationFrame((t) => this.updateFrame(t));
+    this.input.focus();
+  }
+
+  restart() {
+    this.cleanup();
+    this.start();
+  }
+
+  cleanup() {
+    this.isRunning = false;
+    this.isPaused = false;
+    if (this.animationFrameId) cancelAnimationFrame(this.animationFrameId);
+    if (this.spawnTimerId) clearTimeout(this.spawnTimerId);
+  }
+
+  scheduleNextSpawn() {
+    if (!this.isRunning || this.isPaused) return;
+    this.spawnTimerId = setTimeout(() => {
+      this.spawnWord();
+      this.scheduleNextSpawn();
+    }, this.currentSpawnInterval);
+  }
+
+  spawnWord() {
+    if (!this.isRunning || this.isPaused) return;
+
+    // If queue is empty, replenish from history or restart queue
+    if (this.wordsQueue.length === 0) {
+      if (this.activeWords.length === 0) {
+        this.onGameOver(true);
+        return;
+      }
+      return;
+    }
+
+    const wordData = this.wordsQueue.shift();
+    const padding = 80;
+    const spawnWidth = Math.max(200, (this.cssWidth || 800) - padding * 2);
+    const x = padding + Math.random() * spawnWidth;
+
+    const newFallingWord = {
+      ...wordData,
+      x: x,
+      y: -30,
+      speed: this.currentFallSpeed + (Math.random() * 0.2 - 0.1),
+      matchedChars: 0,
+      glow: 0
+    };
+
+    this.activeWords.push(newFallingWord);
+    this.activeWordSpawnTimes.set(wordData.id, performance.now());
+  }
+
+  updateFrame(currentTime) {
+    if (!this.isRunning || this.isPaused) return;
+
+    const deltaTime = Math.min(50, currentTime - this.lastFrameTime) / 16.666; // Normalized to 60fps
+    this.lastFrameTime = currentTime;
+
+    const bottomLimit = (this.cssHeight || 500) - 20;
+
+    // Move words down & check bottom collision
+    for (let i = this.activeWords.length - 1; i >= 0; i--) {
+      const w = this.activeWords[i];
+      w.y += w.speed * deltaTime;
+
+      if (w.y >= bottomLimit) {
+        this.activeWords.splice(i, 1);
+        this.onWordMissed(w);
+      }
+    }
+
+    // Update particles
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      const p = this.particles[i];
+      p.x += p.vx * deltaTime;
+      p.y += p.vy * deltaTime;
+      p.radius += p.dr * deltaTime;
+      p.alpha -= p.decay * deltaTime;
+
+      if (p.alpha <= 0) {
+        this.particles.splice(i, 1);
+      }
+    }
+
+    // Render step
+    this.render();
+
+    if (this.isRunning) {
+      this.animationFrameId = requestAnimationFrame((t) => this.updateFrame(t));
+    }
+  }
+
+  checkInput() {
+    if (!this.isRunning || this.isPaused) return;
+
+    const rawTyped = this.input.value.trim().toLowerCase();
+    if (!rawTyped) {
+      // Clear glows
+      this.activeWords.forEach(w => { w.glow = 0; w.matchedChars = 0; });
+      return;
+    }
+
+    let exactMatchFound = null;
+
+    // Check words
+    this.activeWords.forEach(w => {
+      const cleanTerm = w.term.trim().toLowerCase();
+
+      if (cleanTerm === rawTyped) {
+        exactMatchFound = w;
+      } else if (cleanTerm.startsWith(rawTyped)) {
+        w.glow = 1.0;
+        w.matchedChars = rawTyped.length;
+      } else {
+        w.glow = 0;
+        w.matchedChars = 0;
+      }
+    });
+
+    if (exactMatchFound) {
+      const index = this.activeWords.indexOf(exactMatchFound);
+      if (index !== -1) {
+        this.activeWords.splice(index, 1);
+        this.onWordTyped(exactMatchFound);
+        this.input.value = '';
+      }
+    }
+  }
+
+  onWordTyped(word) {
+    const spawnTime = this.activeWordSpawnTimes.get(word.id) || performance.now();
+    const responseTime = Math.round(performance.now() - spawnTime);
+
+    this.correctCount++;
+    this.combo++;
+
+    // Calculate score: base (10 * level) + combo bonus + speed bonus
+    const speedBonus = Math.max(0, Math.round((5000 - responseTime) / 500));
+    const comboBonus = Math.min(20, this.combo * 2);
+    const addedScore = (10 * this.level) + comboBonus + speedBonus;
+    this.score += addedScore;
+
+    // Record history
+    this.sessionHistory.push({
+      word_id: word.id,
+      typed_correctly: true,
+      response_time_ms: responseTime
+    });
+
+    // Create explosion particle effect
+    this.createExplosion(word.x, word.y, '#4FBDBA');
+
+    // Check level up
+    if (this.correctCount % this.config.levelUpEvery === 0) {
+      this.levelUp();
+    }
+
+    this.updateHUD();
+  }
+
+  onWordMissed(word) {
+    const spawnTime = this.activeWordSpawnTimes.get(word.id) || performance.now();
+    const responseTime = Math.round(performance.now() - spawnTime);
+
+    this.missedCount++;
+    this.combo = 0;
+    this.lives--;
+
+    // Record history
+    this.sessionHistory.push({
+      word_id: word.id,
+      typed_correctly: false,
+      response_time_ms: responseTime
+    });
+
+    // Shake canvas and particle
+    this.shakeCanvas();
+    this.createExplosion(word.x, word.y, '#E8623D');
+
+    this.updateHUD();
+
+    if (this.lives <= 0) {
+      this.onGameOver(false);
+    }
+  }
+
+  levelUp() {
+    this.level++;
+    this.currentFallSpeed += this.config.speedIncreasePerLevel;
+    this.currentSpawnInterval = Math.max(800, this.currentSpawnInterval - 200);
+
+    showToast(`🎉 LÊN LEVEL ${this.level}! Tốc độ rơi tăng lên!`);
+  }
+
+  shakeCanvas() {
+    const wrapper = document.getElementById('word-drop-canvas-wrapper');
+    if (wrapper) {
+      wrapper.classList.remove('shake');
+      void wrapper.offsetWidth; // Force reflow
+      wrapper.classList.add('shake');
+    }
+  }
+
+  createExplosion(x, y, color = '#4FBDBA') {
+    // Ring particle
+    this.particles.push({
+      x, y, vx: 0, vy: 0, radius: 10, dr: 3, alpha: 1.0, decay: 0.04, color, isRing: true
+    });
+
+    // Spark particles
+    const count = 12;
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 / count) * i;
+      const speed = 2 + Math.random() * 3;
+      this.particles.push({
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        radius: 3 + Math.random() * 2,
+        dr: -0.05,
+        alpha: 1.0,
+        decay: 0.03,
+        color,
+        isRing: false
+      });
+    }
+  }
+
+  updateHUD() {
+    const scoreEl = document.getElementById('wd-score');
+    const levelEl = document.getElementById('wd-level');
+    const livesEl = document.getElementById('wd-lives');
+    const comboEl = document.getElementById('wd-combo');
+    const accEl = document.getElementById('wd-accuracy');
+
+    if (scoreEl) scoreEl.innerText = this.score;
+    if (levelEl) levelEl.innerText = this.level;
+    if (livesEl) {
+      const heartString = '❤️'.repeat(Math.max(0, this.lives)) + '🖤'.repeat(Math.max(0, this.config.lives - this.lives));
+      livesEl.innerText = heartString;
+    }
+    if (comboEl) comboEl.innerText = this.combo > 1 ? `x${this.combo}` : `${this.combo}`;
+
+    const total = this.correctCount + this.missedCount;
+    const acc = total > 0 ? Math.round((this.correctCount / total) * 100) : 100;
+    if (accEl) accEl.innerText = `${acc}%`;
+  }
+
+  render() {
+    const w = this.cssWidth || 800;
+    const h = this.cssHeight || 500;
+
+    // Clear background
+    this.ctx.fillStyle = '#0a0a1a';
+    this.ctx.fillRect(0, 0, w, h);
+
+    // Draw subtle grid lines
+    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+    this.ctx.lineWidth = 1;
+    for (let x = 40; x < w; x += 60) {
+      this.ctx.beginPath();
+      this.ctx.moveTo(x, 0);
+      this.ctx.lineTo(x, h);
+      this.ctx.stroke();
+    }
+
+    // Danger zone red gradient at bottom
+    const grad = this.ctx.createLinearGradient(0, h - 35, 0, h);
+    grad.addColorStop(0, 'rgba(232, 98, 61, 0)');
+    grad.addColorStop(1, 'rgba(232, 98, 61, 0.25)');
+    this.ctx.fillStyle = grad;
+    this.ctx.fillRect(0, h - 35, w, 35);
+
+    // Danger line
+    this.ctx.strokeStyle = 'rgba(232, 98, 61, 0.6)';
+    this.ctx.setLineDash([6, 6]);
+    this.ctx.beginPath();
+    this.ctx.moveTo(0, h - 25);
+    this.ctx.lineTo(w, h - 25);
+    this.ctx.stroke();
+    this.ctx.setLineDash([]);
+
+    // Draw Falling Words
+    this.renderWords();
+
+    // Draw Particles
+    this.renderParticles();
+
+    // Draw HUD Canvas Notifications (Combo indicator)
+    this.renderHUD();
+  }
+
+  renderWords() {
+    this.ctx.textAlign = 'center';
+
+    this.activeWords.forEach(w => {
+      // Glow pill background
+      const termFont = '700 20px "Fraunces", serif';
+      this.ctx.font = termFont;
+      const termMetrics = this.ctx.measureText(w.term);
+      const boxWidth = Math.max(140, termMetrics.width + 36);
+      const boxHeight = 52;
+      const boxX = w.x - boxWidth / 2;
+      const boxY = w.y - 26;
+
+      // Card background
+      this.ctx.save();
+      this.ctx.shadowColor = w.glow > 0 ? '#4FBDBA' : 'rgba(0, 0, 0, 0.5)';
+      this.ctx.shadowBlur = w.glow > 0 ? 18 : 8;
+
+      this.ctx.fillStyle = w.glow > 0 ? 'rgba(30, 48, 55, 0.95)' : 'rgba(30, 36, 48, 0.9)';
+      this.ctx.strokeStyle = w.glow > 0 ? '#4FBDBA' : 'rgba(255, 255, 255, 0.12)';
+      this.ctx.lineWidth = w.glow > 0 ? 2 : 1;
+
+      // Draw rounded rectangle
+      this.roundRect(this.ctx, boxX, boxY, boxWidth, boxHeight, 8);
+      this.ctx.fill();
+      this.ctx.stroke();
+      this.ctx.restore();
+
+      // Render Word Term (Highlight matched characters)
+      if (w.matchedChars > 0) {
+        const matched = w.term.slice(0, w.matchedChars);
+        const remainder = w.term.slice(w.matchedChars);
+
+        const fullWidth = termMetrics.width;
+        this.ctx.font = termFont;
+        const matchedWidth = this.ctx.measureText(matched).width;
+        const remainderWidth = this.ctx.measureText(remainder).width;
+
+        const startX = w.x - fullWidth / 2;
+
+        this.ctx.textAlign = 'left';
+        // Green highlight for matched prefix
+        this.ctx.fillStyle = '#4FBDBA';
+        this.ctx.fillText(matched, startX, w.y - 4);
+
+        // Gold for remaining
+        this.ctx.fillStyle = '#E8B84B';
+        this.ctx.fillText(remainder, startX + matchedWidth, w.y - 4);
+        this.ctx.textAlign = 'center';
+      } else {
+        this.ctx.fillStyle = '#E8B84B';
+        this.ctx.font = termFont;
+        this.ctx.fillText(w.term, w.x, w.y - 4);
+      }
+
+      // Render Meaning smaller underneath
+      this.ctx.fillStyle = 'rgba(226, 232, 240, 0.75)';
+      this.ctx.font = '500 11.5px "IBM Plex Sans", sans-serif';
+      const meaningText = w.meaning.length > 25 ? w.meaning.slice(0, 23) + '...' : w.meaning;
+      this.ctx.fillText(meaningText, w.x, w.y + 14);
+    });
+  }
+
+  renderParticles() {
+    this.particles.forEach(p => {
+      this.ctx.save();
+      this.ctx.globalAlpha = Math.max(0, p.alpha);
+      this.ctx.strokeStyle = p.color;
+      this.ctx.fillStyle = p.color;
+
+      if (p.isRing) {
+        this.ctx.lineWidth = 2.5;
+        this.ctx.beginPath();
+        this.ctx.arc(p.x, p.y, Math.max(0, p.radius), 0, Math.PI * 2);
+        this.ctx.stroke();
+      } else {
+        this.ctx.beginPath();
+        this.ctx.arc(p.x, p.y, Math.max(0, p.radius), 0, Math.PI * 2);
+        this.ctx.fill();
+      }
+      this.ctx.restore();
+    });
+  }
+
+  renderHUD() {
+    // Show Combo alert when combo >= 3
+    if (this.combo >= 3) {
+      this.ctx.save();
+      this.ctx.textAlign = 'right';
+      this.ctx.font = '700 16px "IBM Plex Mono", monospace';
+      this.ctx.fillStyle = '#E8623D';
+      this.ctx.shadowColor = '#E8623D';
+      this.ctx.shadowBlur = 10;
+      this.ctx.fillText(`🔥 x${this.combo} COMBO!`, (this.cssWidth || 800) - 20, 35);
+      this.ctx.restore();
+    }
+  }
+
+  roundRect(ctx, x, y, width, height, radius) {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+  }
+
+  async onGameOver(completedAll = false) {
+    this.cleanup();
+
+    const total = this.correctCount + this.missedCount;
+    const accuracy = total > 0 ? Math.round((this.correctCount / total) * 100) : 0;
+
+    // Show game over overlay
+    const overlay = document.getElementById('word-drop-gameover-overlay');
+    const title = document.getElementById('wd-gameover-title');
+    const icon = document.getElementById('wd-gameover-icon');
+
+    if (title) title.innerText = completedAll ? 'Xuất Sắc! Đã Hoàn Thành Toàn Bộ Từ!' : 'Trò Chơi Kết Thúc!';
+    if (icon) icon.innerText = completedAll ? '🏆' : '💀';
+
+    document.getElementById('wd-final-score').innerText = this.score;
+    document.getElementById('wd-final-level').innerText = this.level;
+    document.getElementById('wd-final-correct').innerText = this.correctCount;
+    document.getElementById('wd-final-missed').innerText = this.missedCount;
+    document.getElementById('wd-final-accuracy').innerText = `${accuracy}%`;
+
+    overlay.style.display = 'flex';
+
+    // POST results to server to update SRS and daily_log
+    if (this.sessionHistory.length > 0) {
+      try {
+        const res = await API.postWordDropResult({
+          session_words: this.sessionHistory,
+          score: this.score,
+          accuracy: accuracy
+        });
+        showToast(`Đã đồng bộ ${res.updatedWords} từ vào SRS! Streak: ${res.streak} ngày 🔥`);
+      } catch (e) {
+        showToast('Lỗi lưu kết quả SRS: ' + e.message);
+      }
+    }
+  }
+}
 
 // -------------------------------------------------------------
 // GENERAL UTILITIES

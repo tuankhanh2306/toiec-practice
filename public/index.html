@@ -33,6 +33,7 @@
       <nav class="nav-links">
         <a href="#dashboard" class="nav-btn" id="nav-dashboard">Bàn Học</a>
         <a href="#reading" class="nav-btn" id="nav-reading">📖 Luyện Part 5-7</a>
+        <a href="#word-drop" class="nav-btn" id="nav-word-drop">🎮 Word Drop</a>
         <a href="#dictionary" class="nav-btn" id="nav-dictionary">Từ Điển</a>
         <a href="#import" class="nav-btn" id="nav-import">Thêm Từ Vựng</a>
         <a href="#backup" class="nav-btn" id="nav-backup">Sao Lưu</a>
@@ -81,6 +82,13 @@
           <div>
             <div style="font-weight: 700; color: var(--text-main);">Trắc Nghiệm Tốc Độ</div>
             <div style="font-size: 0.85rem; color: var(--text-muted);">Thử thách 20 từ trong 60 giây</div>
+          </div>
+        </a>
+        <a href="#word-drop" class="mode-card-btn" style="flex: 1; min-width: 240px; background: var(--surface-card); border: 1px solid rgba(79, 189, 186, 0.4); padding: 1.2rem; border-radius: 12px; display: flex; align-items: center; gap: 1rem; text-decoration: none; transition: transform 0.2s, border-color 0.2s;">
+          <div style="font-size: 2rem;">🎮</div>
+          <div>
+            <div style="font-weight: 700; color: var(--accent-teal);">Word Drop Game</div>
+            <div style="font-size: 0.85rem; color: var(--text-muted);">Gõ từ đang rơi củng cố trí nhớ SRS</div>
           </div>
         </a>
         <a href="#dictionary?starred=1" class="mode-card-btn" style="flex: 1; min-width: 240px; background: var(--surface-card); border: 1px solid var(--surface-card-hover); padding: 1.2rem; border-radius: 12px; display: flex; align-items: center; gap: 1rem; text-decoration: none; transition: transform 0.2s, border-color 0.2s;">
@@ -534,6 +542,109 @@
 
         <div class="matching-grid" id="game-grid">
           <!-- Rendered matching grid of cards -->
+        </div>
+      </div>
+    </section>
+
+    <!-- WORD DROP GAME VIEW -->
+    <section id="view-word-drop" class="view">
+      <div class="word-drop-container">
+        <!-- Header Controls -->
+        <div class="word-drop-header">
+          <div class="word-drop-title-area">
+            <h3>🎮 Word Drop</h3>
+            <span class="word-drop-subtitle">Gõ từ đang rơi trước khi chạm đáy để ghi nhớ từ vựng</span>
+          </div>
+
+          <div class="word-drop-controls">
+            <select id="word-drop-topic-select" class="input-text word-drop-select" title="Chọn chủ đề ôn tập">
+              <option value="">Tất cả chủ đề (Mặc định)</option>
+            </select>
+            <select id="word-drop-mode-select" class="input-text word-drop-select" title="Chế độ chọn từ">
+              <option value="srs">Ưu tiên từ cần nhớ (SRS Level 0, 1)</option>
+              <option value="random">Ngẫu nhiên toàn bộ</option>
+            </select>
+            <button class="btn btn-secondary" id="btn-word-drop-pause">Tạm dừng</button>
+            <button class="btn btn-secondary" id="btn-word-drop-restart">Chơi lại</button>
+            <button class="btn btn-primary" id="btn-word-drop-start">Bắt đầu</button>
+          </div>
+        </div>
+
+        <!-- Status Bar / HUD -->
+        <div class="word-drop-status-bar">
+          <div class="status-item"><span class="status-lbl">Điểm:</span> <span id="wd-score" class="status-val gold">0</span></div>
+          <div class="status-item"><span class="status-lbl">Cấp độ:</span> <span id="wd-level" class="status-val teal">1</span></div>
+          <div class="status-item"><span class="status-lbl">Mạng:</span> <span id="wd-lives" class="status-val">❤️❤️❤️</span></div>
+          <div class="status-item"><span class="status-lbl">Combo:</span> <span id="wd-combo" class="status-val coral">0</span></div>
+          <div class="status-item"><span class="status-lbl">Chính xác:</span> <span id="wd-accuracy" class="status-val">100%</span></div>
+        </div>
+
+        <!-- Canvas Area -->
+        <div class="word-drop-canvas-wrapper" id="word-drop-canvas-wrapper">
+          <canvas id="word-drop-canvas"></canvas>
+
+          <!-- Start / Ready Overlay -->
+          <div class="word-drop-overlay" id="word-drop-start-overlay">
+            <div class="word-drop-modal-card">
+              <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎮</div>
+              <h2 style="font-family: var(--font-display); color: var(--accent-gold); margin-bottom: 0.5rem;">Word Drop Challenge</h2>
+              <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6;">
+                Các từ vựng tiếng Anh sẽ rơi dần từ trên xuống. Hãy gõ chính xác từ vựng vào ô nhập bên dưới để tiêu diệt từ trước khi chạm đáy! Gõ đúng sẽ giúp thăng cấp SRS, gõ trượt sẽ đưa từ về ôn tập lại.
+              </p>
+              <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button class="btn btn-primary" id="btn-word-drop-modal-start" style="padding: 0.8rem 2rem; font-size: 1.05rem;">
+                  🚀 Bắt Đầu Chơi
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Game Over Overlay -->
+          <div class="word-drop-overlay" id="word-drop-gameover-overlay" style="display: none;">
+            <div class="word-drop-modal-card">
+              <div id="wd-gameover-icon" style="font-size: 3rem; margin-bottom: 0.5rem;">🏆</div>
+              <h2 id="wd-gameover-title" style="font-family: var(--font-display); color: var(--accent-gold); margin-bottom: 0.5rem;">Hoàn Thành Lượt Chơi!</h2>
+              <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Tiến trình từ vựng của bạn đã được tự động lưu vào hệ thống SRS.</p>
+
+              <div class="results-stats-list" style="margin-bottom: 1.5rem;">
+                <div class="results-stat-row">
+                  <span>Tổng điểm đạt được</span>
+                  <span class="results-stat-val" id="wd-final-score" style="color: var(--accent-gold);">0</span>
+                </div>
+                <div class="results-stat-row">
+                  <span>Cấp độ cao nhất</span>
+                  <span class="results-stat-val" id="wd-final-level" style="color: var(--accent-teal);">1</span>
+                </div>
+                <div class="results-stat-row">
+                  <span>Từ gõ đúng</span>
+                  <span class="results-stat-val" id="wd-final-correct" style="color: var(--accent-teal);">0</span>
+                </div>
+                <div class="results-stat-row">
+                  <span>Từ bị trượt (Missed)</span>
+                  <span class="results-stat-val" id="wd-final-missed" style="color: var(--accent-coral);">0</span>
+                </div>
+                <div class="results-stat-row">
+                  <span>Độ chính xác</span>
+                  <span class="results-stat-val" id="wd-final-accuracy">0%</span>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
+                <button class="btn btn-primary" id="btn-word-drop-play-again" style="flex: 1; min-width: 150px;">
+                  🔄 Chơi Lại
+                </button>
+                <button class="btn btn-secondary" onclick="location.hash='#dashboard'" style="flex: 1; min-width: 150px;">
+                  🏠 Về Bàn Học
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Bar -->
+        <div class="word-drop-input-bar">
+          <input type="text" id="word-drop-input" class="word-drop-input" placeholder="Gõ từ tại đây..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+          <div class="word-drop-input-tip">Nhấn Space hoặc Enter để xóa nhanh • Khớp từ tự động nổ</div>
         </div>
       </div>
     </section>

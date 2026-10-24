@@ -1466,6 +1466,115 @@ app.post('/api/reset', async (req, res) => {
   }
 });
 
+// 12. WORD DROP GAME API ENDPOINTS
+// GET /api/word-drop/words?topic_id=&limit=30&mode=srs
+app.get('/api/word-drop/words', async (req, res) => {
+  try {
+    const { topic_id, limit = 30, mode = 'srs' } = req.query;
+    const limitNum = Math.min(100, Math.max(5, parseInt(limit) || 30));
+
+    let query = `
+      SELECT w.id, w.term, w.meaning, w.ipa, w.example, COALESCE(ls.level, 0) as level
+      FROM words w
+      LEFT JOIN learning_state ls ON w.id = ls.word_id
+      WHERE w.archived = 0
+    `;
+    const params = [];
+
+    if (topic_id) {
+      query += ` AND w.topic_id = ?`;
+      params.push(topic_id);
+    }
+
+    if (mode === 'srs') {
+      // Prioritize lower level (0, 1), then random
+      query += ` ORDER BY COALESCE(ls.level, 0) ASC, RANDOM() LIMIT ?`;
+    } else {
+      query += ` ORDER BY RANDOM() LIMIT ?`;
+    }
+    params.push(limitNum);
+
+    const rows = await db.all(query, params);
+    res.json(rows);
+  } catch (error) {
+    console.error('Word Drop words error:', error);
+    res.status(500).json({ error: 'Lỗi lấy từ vựng Word Drop' });
+  }
+});
+
+// POST /api/word-drop/result
+// Body: { session_words: [{word_id, typed_correctly, response_time_ms}], score, accuracy }
+app.post('/api/word-drop/result', async (req, res) => {
+  try {
+    const { session_words, score, accuracy } = req.body;
+    if (!session_words || !Array.isArray(session_words) || session_words.length === 0) {
+      return res.status(400).json({ error: 'Thiếu dữ liệu session_words' });
+    }
+
+    const todayStr = getTodayString();
+    let totalReviewed = 0;
+
+    for (const item of session_words) {
+      const { word_id, typed_correctly } = item;
+      if (!word_id) continue;
+
+      let state = await db.get("SELECT * FROM learning_state WHERE word_id = ?", [word_id]);
+      if (!state) {
+        state = { word_id, level: 0, last_reviewed: null, next_review: todayStr };
+      }
+
+      let newLevel = 0;
+      let offsetDays = 0;
+
+      if (typed_correctly) {
+        // "Good (3)" equivalent in SRS: level min(4, level + 1)
+        newLevel = Math.min(4, state.level + 1);
+        offsetDays = SRS_INTERVALS[newLevel] || 3;
+      } else {
+        // "Again (1)" equivalent in SRS: reset to 0
+        newLevel = 0;
+        offsetDays = 0;
+      }
+
+      const nextDate = new Date();
+      nextDate.setDate(nextDate.getDate() + offsetDays);
+      const nextReviewStr = `${nextDate.getFullYear()}-${String(nextDate.getMonth() + 1).padStart(2, '0')}-${String(nextDate.getDate()).padStart(2, '0')}`;
+
+      await db.run(`
+        INSERT INTO learning_state (word_id, level, last_reviewed, next_review)
+        VALUES (?, ?, ?, ?)
+        ON CONFLICT(word_id) DO UPDATE SET
+          level = excluded.level,
+          last_reviewed = excluded.last_reviewed,
+          next_review = excluded.next_review
+      `, [word_id, newLevel, todayStr, nextReviewStr]);
+
+      totalReviewed++;
+    }
+
+    if (totalReviewed > 0) {
+      await db.run(`
+        INSERT INTO daily_log (date, count)
+        VALUES (?, ?)
+        ON CONFLICT(date) DO UPDATE SET count = count + ?
+      `, [todayStr, totalReviewed, totalReviewed]);
+    }
+
+    const newStreak = await updateAndGetStreak();
+
+    res.json({
+      success: true,
+      updatedWords: totalReviewed,
+      score: score || 0,
+      accuracy: accuracy || 0,
+      streak: newStreak
+    });
+  } catch (error) {
+    console.error('Word Drop result error:', error);
+    res.status(500).json({ error: 'Lỗi ghi nhận kết quả Word Drop' });
+  }
+});
+
 // Start DB and Express Server
 initDb().then(() => {
   app.listen(PORT, () => {
