@@ -1954,11 +1954,11 @@ class WordDropGame {
     this.ctx = canvas.getContext('2d');
     this.input = input;
 
-    // Default configuration
+    // Default configuration (Tốc độ ban đầu giảm 1 nửa: 0.6 thay vì 1.2, khoảng cách rơi thong thả 3500ms)
     this.defaultConfig = {
-      fallSpeed: 1.2,        // px/frame ban đầu
-      spawnInterval: 2500,   // ms giữa 2 từ rơi
-      speedIncreasePerLevel: 0.3,
+      fallSpeed: 0.6,        // px/frame ban đầu (chậm lại gấp đôi)
+      spawnInterval: 3500,   // ms giữa 2 từ rơi (thoải mái thời gian gõ)
+      speedIncreasePerLevel: 0.15, // tăng nhẹ mỗi level
       lives: 3,
       levelUpEvery: 10,      // số từ đúng để lên level
     };
@@ -1994,8 +1994,50 @@ class WordDropGame {
     this.input.addEventListener('input', () => this.checkInput());
     this.input.addEventListener('keydown', (e) => {
       if (e.key === ' ' || e.key === 'Enter') {
-        e.preventDefault();
-        this.input.value = '';
+        const rawTyped = this.input.value.trim().toLowerCase();
+
+        // Nếu có nội dung gõ, kiểm tra xem có khớp với từ nào đang rơi không
+        if (rawTyped.length > 0) {
+          let matchedWord = null;
+
+          // 1. Ưu tiên khớp chính xác tuyệt đối
+          matchedWord = this.activeWords.find(w => w.term.trim().toLowerCase() === rawTyped);
+
+          // 2. Nếu chưa khớp chính xác, kiểm tra xem có từ nào bắt đầu bằng từ vừa gõ không
+          if (!matchedWord) {
+            // Sắp xếp các từ bắt đầu bằng rawTyped theo vị trí rơi sâu nhất (y lớn nhất) để ưu tiên từ sắp chạm đáy
+            const candidateWords = this.activeWords
+              .filter(w => w.term.trim().toLowerCase().startsWith(rawTyped))
+              .sort((a, b) => b.y - a.y);
+
+            if (candidateWords.length > 0) {
+              matchedWord = candidateWords[0];
+            }
+          }
+
+          if (matchedWord) {
+            e.preventDefault();
+            const index = this.activeWords.indexOf(matchedWord);
+            if (index !== -1) {
+              this.activeWords.splice(index, 1);
+              this.onWordTyped(matchedWord);
+            }
+            this.input.value = '';
+            return;
+          }
+        }
+
+        // Nếu ô nhập trống hoặc nhấn cách để xóa nhanh ô nhập
+        if (e.key === ' ') {
+          // Nếu ô nhập đang trống, chặn khoảng trắng thừa
+          if (this.input.value.trim() === '') {
+            e.preventDefault();
+            this.input.value = '';
+          }
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          this.input.value = '';
+        }
       }
     });
   }
@@ -2280,7 +2322,7 @@ class WordDropGame {
   levelUp() {
     this.level++;
     this.currentFallSpeed += this.config.speedIncreasePerLevel;
-    this.currentSpawnInterval = Math.max(800, this.currentSpawnInterval - 200);
+    this.currentSpawnInterval = Math.max(1200, this.currentSpawnInterval - 150);
 
     showToast(`🎉 LÊN LEVEL ${this.level}! Tốc độ rơi tăng lên!`);
   }
