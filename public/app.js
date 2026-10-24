@@ -107,6 +107,10 @@ const API = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Lỗi lưu kết quả Word Drop');
+    }
     return res.json();
   },
 
@@ -1954,13 +1958,14 @@ class WordDropGame {
     this.ctx = canvas.getContext('2d');
     this.input = input;
 
-    // Default configuration (Tốc độ ban đầu giảm 1 nửa: 0.6 thay vì 1.2, khoảng cách rơi thong thả 3500ms)
+    // Default configuration (Cân chỉnh nhịp độ game: fallSpeed ~0.85 px/frame, spawnInterval ~2.8s-3.2s)
     this.defaultConfig = {
-      fallSpeed: 0.6,        // px/frame ban đầu (chậm lại gấp đôi)
-      spawnInterval: 3500,   // ms giữa 2 từ rơi (thoải mái thời gian gõ)
-      speedIncreasePerLevel: 0.15, // tăng nhẹ mỗi level
+      fallSpeed: 0.85,             // px/frame ban đầu (~0.85 px/frame, vừa vặn để đọc nghĩa và gõ cụm từ)
+      spawnInterval: 3000,         // ms giữa 2 từ rơi (~2.8s - 3.2s)
+      speedIncreasePerLevel: 0.12, // tăng nhẹ đều mỗi level
+      intervalDecreasePerLevel: 180, // giảm khoảng cách spawn khi lên level
       lives: 3,
-      levelUpEvery: 10,      // số từ đúng để lên level
+      levelUpEvery: 10,            // số từ đúng để lên level (mỗi 10 từ đúng lên 1 level)
     };
 
     this.config = { ...this.defaultConfig, ...config };
@@ -1988,55 +1993,82 @@ class WordDropGame {
     this.resizeCanvas();
   }
 
+  normalizeText(str) {
+    if (!str) return '';
+    return str.trim().toLowerCase().replace(/\s+/g, ' ');
+  }
+
+  getPrefix(str) {
+    if (!str) return '';
+    const hasTrailingSpace = str.length > 0 && str.endsWith(' ') && str.trim().length > 0;
+    const collapsed = str.toLowerCase().replace(/^\s+/, '').replace(/\s+/g, ' ');
+    return hasTrailingSpace && !collapsed.endsWith(' ') ? collapsed + ' ' : collapsed;
+  }
+
   setupListeners() {
     window.addEventListener('resize', () => this.resizeCanvas());
 
+    if (this.canvas) {
+      this.canvas.addEventListener('click', () => {
+        if (this.isRunning && !this.isPaused && this.input) {
+          this.input.focus();
+        }
+      });
+    }
+
     this.input.addEventListener('input', () => this.checkInput());
     this.input.addEventListener('keydown', (e) => {
+      // 1. Phím Esc: Xóa nhanh ô nhập khi gõ sai
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        this.input.value = '';
+        this.clearTargetFocus();
+        return;
+      }
+
+      // 2. Phím Space và Enter
       if (e.key === ' ' || e.key === 'Enter') {
-        const rawTyped = this.input.value.trim().toLowerCase();
+        const rawTyped = this.input.value;
+        const normTyped = this.normalizeText(rawTyped);
 
-        // Nếu có nội dung gõ, kiểm tra xem có khớp với từ nào đang rơi không
-        if (rawTyped.length > 0) {
-          let matchedWord = null;
+        // Nếu có nội dung gõ, kiểm tra xem có khớp chính xác hoàn toàn từ nào đang rơi không
+        if (normTyped.length > 0) {
+          const exactMatches = this.activeWords
+            .filter(w => this.normalizeText(w.term) === normTyped)
+            .sort((a, b) => b.y - a.y);
 
-          // 1. Ưu tiên khớp chính xác tuyệt đối
-          matchedWord = this.activeWords.find(w => w.term.trim().toLowerCase() === rawTyped);
-
-          // 2. Nếu chưa khớp chính xác, kiểm tra xem có từ nào bắt đầu bằng từ vừa gõ không
-          if (!matchedWord) {
-            // Sắp xếp các từ bắt đầu bằng rawTyped theo vị trí rơi sâu nhất (y lớn nhất) để ưu tiên từ sắp chạm đáy
-            const candidateWords = this.activeWords
-              .filter(w => w.term.trim().toLowerCase().startsWith(rawTyped))
-              .sort((a, b) => b.y - a.y);
-
-            if (candidateWords.length > 0) {
-              matchedWord = candidateWords[0];
-            }
-          }
-
-          if (matchedWord) {
+          if (exactMatches.length > 0) {
             e.preventDefault();
+            const matchedWord = exactMatches[0];
             const index = this.activeWords.indexOf(matchedWord);
             if (index !== -1) {
               this.activeWords.splice(index, 1);
               this.onWordTyped(matchedWord);
             }
             this.input.value = '';
+            this.clearTargetFocus();
             return;
           }
         }
 
-        // Nếu ô nhập trống hoặc nhấn cách để xóa nhanh ô nhập
-        if (e.key === ' ') {
-          // Nếu ô nhập đang trống, chặn khoảng trắng thừa
-          if (this.input.value.trim() === '') {
-            e.preventDefault();
-            this.input.value = '';
-          }
-        } else if (e.key === 'Enter') {
+        if (e.key === 'Enter') {
+          // Nhấn Enter khi chưa khớp (gõ nhầm): xóa sạch ô để người dùng đổi sang gõ từ khác ngay lập tức
           e.preventDefault();
           this.input.value = '';
+          this.clearTargetFocus();
+        } else if (e.key === ' ') {
+          // Nhấn Space:
+          // Nếu ô nhập đang trống hoặc chỉ chứa khoảng trắng, chặn không cho nhập khoảng trắng ở đầu
+          if (rawTyped.trim() === '') {
+            e.preventDefault();
+            this.input.value = '';
+            this.clearTargetFocus();
+          } else if (rawTyped.endsWith(' ')) {
+            // Ngăn người dùng gõ nhiều dấu cách liên tiếp thừa thãi
+            e.preventDefault();
+          }
+          // Nếu ô nhập đang có chữ (ví dụ "take", "as a"), KHÔNG preventDefault!
+          // Cho phép dấu cách hoạt động bình thường để người dùng tiếp tục gõ cụm từ.
         }
       }
     });
@@ -2149,37 +2181,90 @@ class WordDropGame {
 
   scheduleNextSpawn() {
     if (!this.isRunning || this.isPaused) return;
+    // Dao động nhẹ ~2.8s - 3.2s ở Level 1 (base 3000ms ± 200ms)
+    const variance = (Math.random() * 400) - 200;
+    const interval = Math.max(1200, this.currentSpawnInterval + variance);
     this.spawnTimerId = setTimeout(() => {
       this.spawnWord();
       this.scheduleNextSpawn();
-    }, this.currentSpawnInterval);
+    }, interval);
+  }
+
+  getSmartSpawnX(term) {
+    const w = this.cssWidth || 800;
+    this.ctx.font = '700 20px "Fraunces", serif';
+    const termMetrics = this.ctx.measureText(term);
+    const boxWidth = Math.max(140, termMetrics.width + 36);
+    const halfWidth = boxWidth / 2;
+
+    const minX = halfWidth + 20;
+    const maxX = w - halfWidth - 20;
+
+    if (minX >= maxX) {
+      return w / 2;
+    }
+
+    // Các từ đang ở phần trên canvas (y < 160) có nguy cơ va chạm/chồng lấn
+    const upperWords = this.activeWords.filter(active => active.y < 160);
+
+    if (upperWords.length === 0) {
+      return minX + Math.random() * (maxX - minX);
+    }
+
+    // Phân bổ tọa độ X thông minh: chọn vị trí có khoảng cách lớn nhất tới các từ đang rơi ở trên
+    let bestX = minX + Math.random() * (maxX - minX);
+    let maxMinDist = -1;
+
+    for (let i = 0; i < 12; i++) {
+      const candidateX = minX + Math.random() * (maxX - minX);
+      let minDist = Infinity;
+      for (const uw of upperWords) {
+        const dist = Math.abs(candidateX - uw.x);
+        if (dist < minDist) {
+          minDist = dist;
+        }
+      }
+      if (minDist > maxMinDist) {
+        maxMinDist = minDist;
+        bestX = candidateX;
+      }
+    }
+
+    return bestX;
   }
 
   spawnWord() {
     if (!this.isRunning || this.isPaused) return;
 
-    // If queue is empty, replenish from history or restart queue
+    // If queue is empty, check if game is complete
     if (this.wordsQueue.length === 0) {
       if (this.activeWords.length === 0) {
         this.onGameOver(true);
-        return;
       }
       return;
     }
 
     const wordData = this.wordsQueue.shift();
-    const padding = 80;
-    const spawnWidth = Math.max(200, (this.cssWidth || 800) - padding * 2);
-    const x = padding + Math.random() * spawnWidth;
+    const x = this.getSmartSpawnX(wordData.term);
+    const speedVariation = (Math.random() * 0.1) - 0.05;
 
     const newFallingWord = {
       ...wordData,
       x: x,
       y: -30,
-      speed: this.currentFallSpeed + (Math.random() * 0.2 - 0.1),
+      speed: Math.max(0.6, this.currentFallSpeed + speedVariation),
       matchedChars: 0,
       glow: 0
     };
+
+    // Kiểm tra xem từ mới sinh có khớp tiền tố đang gõ hay không
+    if (this.input.value) {
+      const prefix = this.getPrefix(this.input.value);
+      if (prefix && this.normalizeText(newFallingWord.term).startsWith(prefix)) {
+        newFallingWord.glow = 1.0;
+        newFallingWord.matchedChars = Math.min(newFallingWord.term.length, prefix.length);
+      }
+    }
 
     this.activeWords.push(newFallingWord);
     this.activeWordSpawnTimes.set(wordData.id, performance.now());
@@ -2228,38 +2313,61 @@ class WordDropGame {
   checkInput() {
     if (!this.isRunning || this.isPaused) return;
 
-    const rawTyped = this.input.value.trim().toLowerCase();
-    if (!rawTyped) {
-      // Clear glows
-      this.activeWords.forEach(w => { w.glow = 0; w.matchedChars = 0; });
+    const rawTyped = this.input.value;
+    const normTyped = this.normalizeText(rawTyped);
+
+    if (!normTyped) {
+      this.clearTargetFocus();
       return;
     }
 
-    let exactMatchFound = null;
+    // 1. Cơ chế ăn từ tự động: Khi gõ đúng hoàn toàn từ đơn hoặc cụm từ,
+    // hệ thống ngay lập tức tiêu diệt từ (particle explosion), xóa ô nhập và cộng điểm.
+    const exactMatches = this.activeWords
+      .filter(w => this.normalizeText(w.term) === normTyped)
+      .sort((a, b) => b.y - a.y);
 
-    // Check words
+    if (exactMatches.length > 0) {
+      const matchedWord = exactMatches[0];
+      const index = this.activeWords.indexOf(matchedWord);
+      if (index !== -1) {
+        this.activeWords.splice(index, 1);
+        this.onWordTyped(matchedWord);
+      }
+      this.input.value = '';
+      this.clearTargetFocus();
+      return;
+    }
+
+    // 2. Cơ chế Target Focus (Dẫn hướng trực quan): Khi người dùng bắt đầu gõ các chữ cái đầu,
+    // các từ khớp tiền tố trên canvas sẽ phát sáng (glow viền màu teal) và phần chữ đã gõ đúng đổi màu rõ rệt
+    this.updateTargetFocus(rawTyped);
+  }
+
+  updateTargetFocus(rawTyped) {
+    const prefix = this.getPrefix(rawTyped);
+    if (!prefix) {
+      this.clearTargetFocus();
+      return;
+    }
+
     this.activeWords.forEach(w => {
-      const cleanTerm = w.term.trim().toLowerCase();
-
-      if (cleanTerm === rawTyped) {
-        exactMatchFound = w;
-      } else if (cleanTerm.startsWith(rawTyped)) {
+      const normTerm = this.normalizeText(w.term);
+      if (normTerm.startsWith(prefix)) {
         w.glow = 1.0;
-        w.matchedChars = rawTyped.length;
+        w.matchedChars = Math.min(w.term.length, prefix.length);
       } else {
         w.glow = 0;
         w.matchedChars = 0;
       }
     });
+  }
 
-    if (exactMatchFound) {
-      const index = this.activeWords.indexOf(exactMatchFound);
-      if (index !== -1) {
-        this.activeWords.splice(index, 1);
-        this.onWordTyped(exactMatchFound);
-        this.input.value = '';
-      }
-    }
+  clearTargetFocus() {
+    this.activeWords.forEach(w => {
+      w.glow = 0;
+      w.matchedChars = 0;
+    });
   }
 
   onWordTyped(word) {
@@ -2285,12 +2393,17 @@ class WordDropGame {
     // Create explosion particle effect
     this.createExplosion(word.x, word.y, '#4FBDBA');
 
-    // Check level up
+    // Check level up (mỗi 10 từ đúng lên 1 level)
     if (this.correctCount % this.config.levelUpEvery === 0) {
       this.levelUp();
     }
 
     this.updateHUD();
+
+    // Nếu đã hết từ trong queue và không còn từ nào trên màn hình -> hoàn thành
+    if (this.wordsQueue.length === 0 && this.activeWords.length === 0) {
+      this.onGameOver(true);
+    }
   }
 
   onWordMissed(word) {
@@ -2316,13 +2429,23 @@ class WordDropGame {
 
     if (this.lives <= 0) {
       this.onGameOver(false);
+      return;
+    }
+
+    if (this.wordsQueue.length === 0 && this.activeWords.length === 0) {
+      this.onGameOver(true);
+      return;
+    }
+
+    if (this.input.value) {
+      this.updateTargetFocus(this.input.value);
     }
   }
 
   levelUp() {
     this.level++;
     this.currentFallSpeed += this.config.speedIncreasePerLevel;
-    this.currentSpawnInterval = Math.max(1200, this.currentSpawnInterval - 150);
+    this.currentSpawnInterval = Math.max(1400, this.currentSpawnInterval - this.config.intervalDecreasePerLevel);
 
     showToast(`🎉 LÊN LEVEL ${this.level}! Tốc độ rơi tăng lên!`);
   }
@@ -2462,12 +2585,11 @@ class WordDropGame {
         const fullWidth = termMetrics.width;
         this.ctx.font = termFont;
         const matchedWidth = this.ctx.measureText(matched).width;
-        const remainderWidth = this.ctx.measureText(remainder).width;
 
         const startX = w.x - fullWidth / 2;
 
         this.ctx.textAlign = 'left';
-        // Green highlight for matched prefix
+        // Teal highlight for matched prefix
         this.ctx.fillStyle = '#4FBDBA';
         this.ctx.fillText(matched, startX, w.y - 4);
 
@@ -2481,10 +2603,11 @@ class WordDropGame {
         this.ctx.fillText(w.term, w.x, w.y - 4);
       }
 
-      // Render Meaning smaller underneath
+      // Render Meaning underneath (adaptive length based on card width)
       this.ctx.fillStyle = 'rgba(226, 232, 240, 0.75)';
       this.ctx.font = '500 11.5px "IBM Plex Sans", sans-serif';
-      const meaningText = w.meaning.length > 25 ? w.meaning.slice(0, 23) + '...' : w.meaning;
+      const maxMeaningChars = Math.max(25, Math.floor(boxWidth / 7.2));
+      const meaningText = w.meaning.length > maxMeaningChars ? w.meaning.slice(0, maxMeaningChars - 2) + '...' : w.meaning;
       this.ctx.fillText(meaningText, w.x, w.y + 14);
     });
   }
