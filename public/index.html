@@ -629,6 +629,15 @@
                 </div>
               </div>
 
+              <!-- Danh sách từ cần ôn lại (Missed / Incorrect Vocab) -->
+              <div id="wd-missed-section" style="display: none; text-align: left; margin-bottom: 1.5rem; max-height: 180px; overflow-y: auto; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 0.8rem;">
+                <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-coral); margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
+                  <span>⚠️ Các từ bạn bị vấp (Đã chuyển về SRS Level 0):</span>
+                  <span id="wd-missed-badge" style="background: rgba(232, 98, 61, 0.2); padding: 2px 8px; border-radius: 12px; font-size: 0.75rem;">0 từ</span>
+                </div>
+                <div id="wd-missed-list" style="display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.85rem;"></div>
+              </div>
+
               <div style="display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap;">
                 <button class="btn btn-primary" id="btn-word-drop-play-again" style="flex: 1; min-width: 150px;">
                   🔄 Chơi Lại
@@ -644,7 +653,7 @@
         <!-- Input Bar -->
         <div class="word-drop-input-bar">
           <input type="text" id="word-drop-input" class="word-drop-input" placeholder="Gõ từ tại đây..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
-          <div class="word-drop-input-tip">Gõ từ rồi bấm phím Cách hoặc Enter để ăn từ rơi • Khớp hoàn toàn tự động nổ</div>
+          <div class="word-drop-input-tip">Tự động nổ khi gõ đúng từ hoặc cụm từ • Nhấn Enter hoặc Esc để xóa nhanh ô nhập</div>
         </div>
       </div>
     </section>

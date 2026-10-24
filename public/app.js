@@ -1981,7 +1981,9 @@ class WordDropGame {
     this.correctCount = 0;
     this.missedCount = 0;
     this.sessionHistory = [];  // [{word_id, typed_correctly, response_time_ms}]
+    this.missedWordsList = []; // lưu lại danh sách từ vựng bị trượt để review cuối game
     this.activeWordSpawnTimes = new Map(); // word.id -> spawn timestamp
+    this.lockedTarget = null;  // Cơ chế Target-Lock kiểu ZType / Parroto
 
     this.isRunning = false;
     this.isPaused = false;
@@ -1991,6 +1993,19 @@ class WordDropGame {
 
     this.setupListeners();
     this.resizeCanvas();
+  }
+
+  speakWord(text) {
+    if (!('speechSynthesis' in window)) return;
+    try {
+      window.speechSynthesis.cancel(); // Dừng câu trước nếu có
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 1.0;
+      window.speechSynthesis.speak(utterance);
+    } catch (e) {
+      console.warn('Speech synthesis error:', e);
+    }
   }
 
   normalizeText(str) {
@@ -2018,10 +2033,11 @@ class WordDropGame {
 
     this.input.addEventListener('input', () => this.checkInput());
     this.input.addEventListener('keydown', (e) => {
-      // 1. Phím Esc: Xóa nhanh ô nhập khi gõ sai
+      // 1. Phím Esc: Xóa nhanh ô nhập khi gõ sai & mở khóa mục tiêu
       if (e.key === 'Escape') {
         e.preventDefault();
         this.input.value = '';
+        this.lockedTarget = null;
         this.clearTargetFocus();
         return;
       }
@@ -2046,6 +2062,7 @@ class WordDropGame {
               this.onWordTyped(matchedWord);
             }
             this.input.value = '';
+            this.lockedTarget = null;
             this.clearTargetFocus();
             return;
           }
@@ -2055,6 +2072,7 @@ class WordDropGame {
           // Nhấn Enter khi chưa khớp (gõ nhầm): xóa sạch ô để người dùng đổi sang gõ từ khác ngay lập tức
           e.preventDefault();
           this.input.value = '';
+          this.lockedTarget = null;
           this.clearTargetFocus();
         } else if (e.key === ' ') {
           // Nhấn Space:
@@ -2062,6 +2080,7 @@ class WordDropGame {
           if (rawTyped.trim() === '') {
             e.preventDefault();
             this.input.value = '';
+            this.lockedTarget = null;
             this.clearTargetFocus();
           } else if (rawTyped.endsWith(' ')) {
             // Ngăn người dùng gõ nhiều dấu cách liên tiếp thừa thãi
@@ -2126,6 +2145,8 @@ class WordDropGame {
       this.correctCount = 0;
       this.missedCount = 0;
       this.sessionHistory = [];
+      this.missedWordsList = [];
+      this.lockedTarget = null;
       this.activeWords = [];
       this.particles = [];
       this.activeWordSpawnTimes.clear();
@@ -2317,11 +2338,29 @@ class WordDropGame {
     const normTyped = this.normalizeText(rawTyped);
 
     if (!normTyped) {
+      this.lockedTarget = null;
       this.clearTargetFocus();
       return;
     }
 
-    // 1. Cơ chế ăn từ tự động: Khi gõ đúng hoàn toàn từ đơn hoặc cụm từ,
+    // 1. Nếu đang có mục tiêu bị khóa (Target-Lock):
+    // Ưu tiên kiểm tra mục tiêu đó trước
+    if (this.lockedTarget && this.activeWords.includes(this.lockedTarget)) {
+      if (this.normalizeText(this.lockedTarget.term) === normTyped) {
+        const matched = this.lockedTarget;
+        const index = this.activeWords.indexOf(matched);
+        if (index !== -1) {
+          this.activeWords.splice(index, 1);
+          this.onWordTyped(matched);
+        }
+        this.input.value = '';
+        this.lockedTarget = null;
+        this.clearTargetFocus();
+        return;
+      }
+    }
+
+    // 2. Cơ chế ăn từ tự động: Khi gõ đúng hoàn toàn từ đơn hoặc cụm từ,
     // hệ thống ngay lập tức tiêu diệt từ (particle explosion), xóa ô nhập và cộng điểm.
     const exactMatches = this.activeWords
       .filter(w => this.normalizeText(w.term) === normTyped)
@@ -2335,29 +2374,69 @@ class WordDropGame {
         this.onWordTyped(matchedWord);
       }
       this.input.value = '';
+      this.lockedTarget = null;
       this.clearTargetFocus();
       return;
     }
 
-    // 2. Cơ chế Target Focus (Dẫn hướng trực quan): Khi người dùng bắt đầu gõ các chữ cái đầu,
-    // các từ khớp tiền tố trên canvas sẽ phát sáng (glow viền màu teal) và phần chữ đã gõ đúng đổi màu rõ rệt
+    // 3. Cơ chế Target-Lock (ZType/Parroto):
+    // Cập nhật và khóa mục tiêu dựa trên tiền tố gõ
     this.updateTargetFocus(rawTyped);
   }
 
   updateTargetFocus(rawTyped) {
     const prefix = this.getPrefix(rawTyped);
     if (!prefix) {
+      this.lockedTarget = null;
       this.clearTargetFocus();
       return;
     }
 
+    // Nếu đã có mục tiêu bị khóa và vẫn khớp tiền tố -> giữ nguyên khóa mục tiêu
+    if (this.lockedTarget && this.activeWords.includes(this.lockedTarget)) {
+      const normLocked = this.normalizeText(this.lockedTarget.term);
+      if (normLocked.startsWith(prefix)) {
+        this.activeWords.forEach(w => {
+          if (w === this.lockedTarget) {
+            w.glow = 1.0;
+            w.isLocked = true;
+            w.matchedChars = Math.min(w.term.length, prefix.length);
+          } else {
+            w.glow = 0;
+            w.isLocked = false;
+            w.matchedChars = 0;
+          }
+        });
+        return;
+      } else {
+        // Người dùng đã gõ sai khỏi tiền tố của từ đang khóa
+        this.lockedTarget = null;
+      }
+    }
+
+    // Tìm các từ khớp tiền tố, ưu tiên từ rơi gần đáy nhất (y lớn nhất) để khóa
+    const candidateMatches = this.activeWords
+      .filter(w => this.normalizeText(w.term).startsWith(prefix))
+      .sort((a, b) => b.y - a.y);
+
+    if (candidateMatches.length > 0) {
+      this.lockedTarget = candidateMatches[0];
+    } else {
+      this.lockedTarget = null;
+    }
+
     this.activeWords.forEach(w => {
-      const normTerm = this.normalizeText(w.term);
-      if (normTerm.startsWith(prefix)) {
+      if (this.lockedTarget && w === this.lockedTarget) {
         w.glow = 1.0;
+        w.isLocked = true;
+        w.matchedChars = Math.min(w.term.length, prefix.length);
+      } else if (!this.lockedTarget && this.normalizeText(w.term).startsWith(prefix)) {
+        w.glow = 0.6;
+        w.isLocked = false;
         w.matchedChars = Math.min(w.term.length, prefix.length);
       } else {
         w.glow = 0;
+        w.isLocked = false;
         w.matchedChars = 0;
       }
     });
@@ -2366,6 +2445,7 @@ class WordDropGame {
   clearTargetFocus() {
     this.activeWords.forEach(w => {
       w.glow = 0;
+      w.isLocked = false;
       w.matchedChars = 0;
     });
   }
@@ -2393,6 +2473,9 @@ class WordDropGame {
     // Create explosion particle effect
     this.createExplosion(word.x, word.y, '#4FBDBA');
 
+    // Text-to-Speech phát âm chuẩn tiếng Anh ngay khi bắn nổ từ
+    this.speakWord(word.term);
+
     // Check level up (mỗi 10 từ đúng lên 1 level)
     if (this.correctCount % this.config.levelUpEvery === 0) {
       this.levelUp();
@@ -2413,6 +2496,15 @@ class WordDropGame {
     this.missedCount++;
     this.combo = 0;
     this.lives--;
+
+    // Lưu từ bị trượt để hiển thị tổng kết sau trận
+    if (!this.missedWordsList.some(w => w.id === word.id)) {
+      this.missedWordsList.push(word);
+    }
+
+    if (this.lockedTarget === word) {
+      this.lockedTarget = null;
+    }
 
     // Record history
     this.sessionHistory.push({
@@ -2680,6 +2772,30 @@ class WordDropGame {
     document.getElementById('wd-final-correct').innerText = this.correctCount;
     document.getElementById('wd-final-missed').innerText = this.missedCount;
     document.getElementById('wd-final-accuracy').innerText = `${accuracy}%`;
+
+    // Render danh sách từ bị vấp (Missed Words Review)
+    const missedSection = document.getElementById('wd-missed-section');
+    const missedList = document.getElementById('wd-missed-list');
+    const missedBadge = document.getElementById('wd-missed-badge');
+
+    if (missedSection && missedList) {
+      if (this.missedWordsList.length > 0) {
+        missedBadge.innerText = `${this.missedWordsList.length} từ`;
+        missedList.innerHTML = this.missedWordsList.map(w => `
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 6px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+            <div>
+              <strong style="color: var(--accent-gold);">${escapeHTML(w.term)}</strong>
+              ${w.ipa ? `<span style="font-family: var(--font-mono); color: var(--accent-teal); font-size: 0.8rem; margin-left: 4px;">${escapeHTML(w.ipa)}</span>` : ''}
+              <div style="color: var(--text-muted); font-size: 0.8rem;">${escapeHTML(w.meaning)}</div>
+            </div>
+            <button class="btn btn-secondary" style="padding: 2px 8px; font-size: 0.75rem;" onclick="App.wordDropGameInstance.speakWord('${escapeHTML(w.term).replace(/'/g, "\\'")}')">🔊</button>
+          </div>
+        `).join('');
+        missedSection.style.display = 'block';
+      } else {
+        missedSection.style.display = 'none';
+      }
+    }
 
     overlay.style.display = 'flex';
 
